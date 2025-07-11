@@ -8,7 +8,7 @@
 
 ```
 ├── oracle_sql_presentation.html       # Interactive training slides (HTML format)
-├── README.md                      # Project overview and instructions
+├── README.md                          # Project overview and instructions
 ```
 
 ---
@@ -54,7 +54,7 @@ No installation required — this is a standalone HTML file. Just open in any mo
 
 ## 💡 Credits
 
-Created by [Your Name] — tailored for educational use and SQL onboarding sessions.
+Created by Mostafa Ashry — tailored for educational use and SQL onboarding sessions.
 
 ---
 
