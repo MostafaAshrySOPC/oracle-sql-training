@@ -7,7 +7,7 @@
 ## 📂 Project Structure
 
 ```
-├── oracle_sql_enhanced.html       # Interactive training slides (HTML format)
+├── oracle_sql_presentation.html       # Interactive training slides (HTML format)
 ├── README.md                      # Project overview and instructions
 ```
 
