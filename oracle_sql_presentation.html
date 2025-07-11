@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oracle SQL Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 60px;
+            display: none;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .slide-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+
+        .session-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .content-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .card-content {
+            color: #5a6c7d;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 28px 60px 20px 60px; /* top, right, bottom, left */
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "SQL";
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .bullet-list li {
+            padding: 10px 0;
+            border-left: 3px solid #667eea;
+            padding-left: 20px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #667eea;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .styled-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .styled-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .styled-table tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .schema-diagram {
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #667eea;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .learning-objectives h3 {
+            margin-bottom: 15px;
+        }
+
+        .learning-objectives ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .learning-objectives li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #a8edea;
+            font-weight: bold;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .slide {
+                padding: 30px;
+            }
+            
+            .slide-title {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Dark mode variables */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --slide-bg: white;
+            --text-color: #333;
+            --card-bg: #f8f9fa;
+            --highlight-bg: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            --code-bg: #2c3e50;
+            --code-color: #ecf0f1;
+        }
+        
+        body.dark-mode {
+            --bg-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
+            --slide-bg: #232526;
+            --text-color: #ecf0f1;
+            --card-bg: #2c3e50;
+            --highlight-bg: linear-gradient(120deg, #667eea 0%, #764ba2 100%);
+            --code-bg: #111;
+            --code-color: #a8edea;
+        }
+        
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-color);
+        }
+        .slide {
+            background: var(--slide-bg);
+        }
+        .content-card, .bullet-list li, .schema-diagram {
+            background: var(--card-bg);
+        }
+        .highlight {
+            background: var(--highlight-bg);
+        }
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-color);
+        }
+        /* Copy button styles */
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 2px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            z-index: 2;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .copy-btn.copied {
+            background: #27ae60;
+        }
+        .dark-toggle {
+            position: fixed;
+            top: 20px;
+            left: 30px;
+            z-index: 1000;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="progress-bar" id="progressBar"></div>
+        
+        <!-- Slide 1: Session 1 Agenda (combined) -->
+        <div class="slide active">
+            <div class="slide-counter">1 / 37</div>
+            <div class="session-badge">Session 1</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Session 1 Agenda</h1>
+                <p class="slide-subtitle">What We Will Cover</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Session 1 Topics</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>What is a database and why it’s important</li>
+                        <li>Types of databases</li>
+                        <li>Relational database concepts and ACID properties</li>
+                        <li>Database constraints</li>
+                        <li>HR schema structure and relationships</li>
+                        <li>Basic SQL queries: SELECT, WHERE, pattern matching</li>
+                        <li>Advanced WHERE conditions</li>
+                        <li>Working with NULL values</li>
+                        <li>Sorting and using functions in SQL</li>
+                        <li>Hands-on exercises</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: What is a Database? (moved here) -->
+        <div class="slide">
+            <div class="slide-counter">2 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">What is a Database?</h1>
+                <p class="slide-subtitle">Definition</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Definition</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>A <span class="highlight">database</span> is an organized collection of data stored electronically.</li>
+                        <li>Managed by a <span class="highlight">Database Management System (DBMS)</span> for storage, retrieval, and manipulation.</li>
+                        <li>Data can include <b>text, numbers, images, videos</b>, and more.</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top: 20px; text-align: right; font-size: 0.9em; color: #888;">
+                Source: <a href="https://www.geeksforgeeks.org/dbms/what-is-database/" target="_blank">GeeksforGeeks: What is Database?</a>
+            </div>
+        </div>
+
+        <!-- Slide 3: Types of Databases (updated) -->
+        <div class="slide">
+            <div class="slide-counter">3 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Types of Databases</h1>
+                <p class="slide-subtitle">Overview of Data Models</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Common Database Types</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li><b>Hierarchical:</b> Tree-structured data (e.g., Windows Registry)</li>
+                        <li><b>Network:</b> Complex many-to-many relationships (e.g., IDS)</li>
+                        <li><b>Object-Oriented:</b> Stores objects with methods (e.g., ObjectDB)</li>
+                        <li><b>Relational:</b> Tables with keys and SQL (e.g., Oracle, MySQL)</li>
+                        <li><b>Cloud:</b> Hosted remotely (e.g., AWS Aurora)</li>
+                        <li><b>Centralized:</b> One central location (e.g., mainframe systems)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Hierarchical Databases -->
+        <div class="slide">
+            <div class="slide-counter">4 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Hierarchical Databases</h1>
+                <p class="slide-subtitle">Types of Databases</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Hierarchical Databases</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Organize data in a <span class="highlight">tree-like structure</span> (parent-child).</li>
+                        <li><b>Advantage:</b> Simple and fast for hierarchical data.</li>
+                        <li><b>Disadvantage:</b> Not flexible for complex relationships.</li>
+                        <li><b>Example:</b> IBM Information Management System (IMS), Windows Registry</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Network Databases -->
+        <div class="slide">
+            <div class="slide-counter">5 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Network Databases</h1>
+                <p class="slide-subtitle">Types of Databases</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Network Databases</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Child records can have <span class="highlight">multiple parents</span> (many-to-many).</li>
+                        <li><b>Advantage:</b> Flexible, supports complex relationships.</li>
+                        <li><b>Disadvantage:</b> Complex to design/manage.</li>
+                        <li><b>Example:</b> Integrated Data Store (IDS), TurboIMAGE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Object-Oriented Databases -->
+        <div class="slide">
+            <div class="slide-counter">6 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Object-Oriented Databases</h1>
+                <p class="slide-subtitle">Types of Databases</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Object-Oriented Databases</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Store data as <span class="highlight">objects</span> (with attributes and methods).</li>
+                        <li><b>Advantage:</b> Great for complex data (multimedia, CAD).</li>
+                        <li><b>Disadvantage:</b> Requires OOP knowledge, less widely supported.</li>
+                        <li><b>Example:</b> db4o, ObjectDB, Versant Object Database</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Relational Databases (RDBMS) -->
+        <div class="slide">
+            <div class="slide-counter">7 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Relational Databases (RDBMS)</h1>
+                <p class="slide-subtitle">Types of Databases</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Relational Databases (RDBMS)</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Store data in <span class="highlight">tables</span> (rows/columns), use keys for relationships.</li>
+                        <li><b>Advantage:</b> Structured, easy to use, supports ACID.</li>
+                        <li><b>Disadvantage:</b> Can be hard to scale for huge data.</li>
+                        <li><b>Example:</b> Oracle Database, MySQL, Microsoft SQL Server, PostgreSQL</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Cloud Databases -->
+        <div class="slide">
+            <div class="slide-counter">8 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Cloud Databases</h1>
+                <p class="slide-subtitle">Types of Databases</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Cloud Databases</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Hosted on <span class="highlight">cloud platforms</span>, accessible over the internet.</li>
+                        <li><b>Advantage:</b> Scalable, easy to manage, pay-as-you-go.</li>
+                        <li><b>Disadvantage:</b> Dependent on internet, security concerns.</li>
+                        <li><b>Example:</b> Amazon Aurora, Google Cloud Spanner, Microsoft Azure SQL Database</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Centralized Databases -->
+        <div class="slide">
+            <div class="slide-counter">9 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Centralized Databases</h1>
+                <p class="slide-subtitle">Types of Databases</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Centralized Databases</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>All data stored at a <span class="highlight">single location/server</span>.</li>
+                        <li><b>Advantage:</b> High security and consistency.</li>
+                        <li><b>Disadvantage:</b> Single point of failure, can be a bottleneck.</li>
+                        <li><b>Example:</b> Mainframe databases used by banks, Library catalog system hosted on a single server</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: What is an RDBMS? -->
+        <div class="slide">
+            <div class="slide-counter">10 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">What is an RDBMS?</h1>
+                <p class="slide-subtitle">Relational Database Concepts</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">What is an RDBMS?</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>An <span class="highlight">RDBMS</span> (Relational Database Management System) stores data in tables (relations) with rows and columns.</li>
+                        <li>Each table has a <b>primary key</b> to uniquely identify rows; tables can be linked using <b>foreign keys</b>.</li>
+                        <li>Uses <b>SQL</b> for data access and management.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Key Features of RDBMS -->
+        <div class="slide">
+            <div class="slide-counter">11 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Key Features of RDBMS</h1>
+                <p class="slide-subtitle">Relational Database Concepts</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Key Features</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li><b>ACID compliance</b> (Atomicity, Consistency, Isolation, Durability) for reliable transactions</li>
+                        <li>Supports <b>multi-user access</b> and <b>data integrity</b></li>
+                        <li>Enforces <b>schemas</b> and <b>normalization</b> for structured data</li>
+                        <li>Examples: Oracle Database, MySQL, SQL Server, IBM Db2</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">What is ACID?</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li><b>Atomicity:</b> Each transaction is all-or-nothing. If any part fails, the whole transaction is rolled back.</li>
+                        <li><b>Consistency:</b> Transactions bring the database from one valid state to another, maintaining all rules and constraints.</li>
+                        <li><b>Isolation:</b> Transactions are processed independently and transparently—intermediate results are invisible to other transactions.</li>
+                        <li><b>Durability:</b> Once a transaction is committed, its results are permanent, even in the case of a system failure.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: How RDBMS Works -->
+        <div class="slide">
+            <div class="slide-counter">12 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">How RDBMS Works</h1>
+                <p class="slide-subtitle">Relational Database Concepts</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">How It Works</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Data is organized in <b>tables</b>. Each row is a record; each column is a field/attribute.</li>
+                        <li><b>Primary keys</b> uniquely identify rows. <b>Foreign keys</b> link tables together.</li>
+                        <li>Constraints ensure data accuracy and relationships.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: What are Constraints? -->
+        <div class="slide">
+            <div class="slide-counter">13 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">What are Constraints?</h1>
+                <p class="slide-subtitle">Constraints in Relational Databases</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">What are Constraints?</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Rules that enforce the accuracy, consistency, and integrity of data in tables.</li>
+                        <li>Prevent invalid data and maintain relationships between tables.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Main Types of Constraints -->
+        <div class="slide">
+            <div class="slide-counter">14 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Main Types of Constraints</h1>
+                <p class="slide-subtitle">Constraints in Relational Databases</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Main Types of Constraints</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li><b>PRIMARY KEY</b>: Uniquely identifies each row in a table (no duplicates, no NULLs).</li>
+                        <li><b>FOREIGN KEY</b>: Links to another table's primary key (e.g., department_id).</li>
+                        <li><b>NOT NULL</b>: Ensures a column cannot have NULL (empty) values.</li>
+                        <li><b>UNIQUE</b>: Ensures all values in a column are different.</li>
+                        <li><b>CHECK</b>: Ensures values in a column meet a specific condition.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Why Constraints Matter -->
+        <div class="slide">
+            <div class="slide-counter">15 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Why Constraints Matter</h1>
+                <p class="slide-subtitle">Constraints in Relational Databases</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Why Constraints Matter</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Guarantee data quality and prevent errors</li>
+                        <li>Maintain valid relationships between tables</li>
+                        <li>Support reliable business operations and analytics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: HR Schema Overview -->
+        <div class="slide">
+            <div class="slide-counter">16 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">HR Schema Structure</h1>
+                <p class="slide-subtitle">Understanding Our Practice Database</p>
+            </div>
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Table Name</th>
+                            <th>Primary Key</th>
+                            <th>Description</th>
+                            <th>Key Columns</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>EMPLOYEES</strong></td>
+                            <td>employee_id</td>
+                            <td>Core employee information</td>
+                            <td>first_name, last_name, salary, department_id</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DEPARTMENTS</strong></td>
+                            <td>department_id</td>
+                            <td>Department details</td>
+                            <td>department_name, manager_id, location_id</td>
+                        </tr>
+                        <tr>
+                            <td><strong>JOBS</strong></td>
+                            <td>job_id</td>
+                            <td>Job positions</td>
+                            <td>job_title, min_salary, max_salary</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LOCATIONS</strong></td>
+                            <td>location_id</td>
+                            <td>Office locations</td>
+                            <td>city, state_province, country_id</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Slide 17.5: HR Schema ER Diagram -->
+        <div class="slide">
+            <div class="slide-counter">17 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">HR Schema ER Diagram</h1>
+                <p class="slide-subtitle">Visualizing Table Relationships</p>
+            </div>
+            <div class="schema-diagram">
+                <svg width="500" height="260" viewBox="0 0 500 260">
+                    <rect x="30" y="30" width="120" height="60" rx="10" fill="#667eea"/>
+                    <text x="90" y="55" fill="white" font-size="16" text-anchor="middle">EMPLOYEES</text>
+                    <text x="90" y="75" fill="white" font-size="12" text-anchor="middle">employee_id (PK)</text>
+                    <rect x="200" y="30" width="120" height="60" rx="10" fill="#764ba2"/>
+                    <text x="260" y="55" fill="white" font-size="16" text-anchor="middle">DEPARTMENTS</text>
+                    <text x="260" y="75" fill="white" font-size="12" text-anchor="middle">department_id (PK)</text>
+                    <rect x="370" y="30" width="100" height="60" rx="10" fill="#feca57"/>
+                    <text x="420" y="55" fill="#2c3e50" font-size="16" text-anchor="middle">JOBS</text>
+                    <text x="420" y="75" fill="#2c3e50" font-size="12" text-anchor="middle">job_id (PK)</text>
+                    <rect x="200" y="150" width="120" height="60" rx="10" fill="#ff6b6b"/>
+                    <text x="260" y="175" fill="white" font-size="16" text-anchor="middle">LOCATIONS</text>
+                    <text x="260" y="195" fill="white" font-size="12" text-anchor="middle">location_id (PK)</text>
+                    <!-- Lines for relationships -->
+                    <line x1="150" y1="60" x2="200" y2="60" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <line x1="320" y1="60" x2="370" y2="60" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <line x1="260" y1="90" x2="260" y2="150" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <defs>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+                            <path d="M0,0 L10,5 L0,10" fill="#333" />
+                        </marker>
+                    </defs>
+                </svg>
+                <div style="margin-top:10px; color:#667eea; font-size:0.95em;">Arrows show foreign key relationships (EMPLOYEES → DEPARTMENTS → LOCATIONS, DEPARTMENTS → JOBS)</div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Basic SELECT -->
+        <div class="slide">
+            <div class="slide-counter">18 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Basic SELECT Statements</h1>
+                <p class="slide-subtitle">Your First SQL Queries</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Basic Syntax</h3>
+                    <div class="card-content">
+                        <div class="code-block">SELECT column1, column2, ...
+FROM table_name;</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Select All Columns</h3>
+                    <div class="card-content">
+                        <div class="code-block">SELECT * FROM employees;</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Select Specific Columns</h3>
+                    <div class="card-content">
+                        <div class="code-block">SELECT first_name, last_name, salary 
+FROM employees;</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Using Column Aliases</h3>
+                    <div class="card-content">
+                        <div class="code-block">SELECT first_name AS "First Name", 
+       salary AS "Monthly Salary"
+FROM employees;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: WHERE Clause -->
+        <div class="slide">
+            <div class="slide-counter">19 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">WHERE Clause</h1>
+                <p class="slide-subtitle">Filtering Your Data</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Basic WHERE Syntax</h3>
+                    <div class="card-content">
+                        <div class="code-block">SELECT column1, column2
+FROM table_name
+WHERE condition;</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Comparison Operators</h3>
+                    <div class="card-content">
+                        <ul class="bullet-list">
+                            <li><span class="highlight">=</span> Equal to</li>
+                            <li><span class="highlight">!=</span> or <span class="highlight">&lt;&gt;</span> Not equal</li>
+                            <li><span class="highlight">&gt;</span>, <span class="highlight">&lt;</span>, <span class="highlight">&gt;=</span>, <span class="highlight">&lt;=</span> Comparisons</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Examples</h3>
+                <div class="card-content">
+                    <div class="code-block">-- Find employees with salary greater than 10000
+SELECT first_name, last_name, salary
+FROM employees
+WHERE salary > 10000;
+
+-- Find employees in department 50
+SELECT first_name, last_name, department_id
+FROM employees
+WHERE department_id = 50;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20: Pattern Matching -->
+        <div class="slide">
+            <div class="slide-counter">20 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Pattern Matching with LIKE</h1>
+                <p class="slide-subtitle">Finding Patterns in Your Data</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Wildcards</h3>
+                    <div class="card-content">
+                        <ul class="bullet-list">
+                            <li><span class="highlight">%</span> - Matches any sequence of characters</li>
+                            <li><span class="highlight">_</span> - Matches any single character</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Examples</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Names starting with 'J'
+SELECT first_name, last_name
+FROM employees
+WHERE first_name LIKE 'J%';
+
+-- Second letter is 'o'
+SELECT first_name, last_name
+FROM employees
+WHERE first_name LIKE '_o%';</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21: Advanced WHERE -->
+        <div class="slide">
+            <div class="slide-counter">21 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Advanced WHERE Conditions</h1>
+                <p class="slide-subtitle">Complex Filtering</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">IN and BETWEEN</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- IN operator
+SELECT first_name, department_id
+FROM employees
+WHERE department_id IN (10, 20, 30);
+
+-- BETWEEN operator
+SELECT first_name, salary
+FROM employees
+WHERE salary BETWEEN 5000 AND 10000;</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Logical Operators</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- AND operator
+SELECT first_name, salary
+FROM employees
+WHERE salary > 8000 AND department_id = 60;
+
+-- OR operator
+SELECT first_name, job_id
+FROM employees
+WHERE job_id = 'IT_PROG' OR job_id = 'SA_REP';</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: NULL Values -->
+        <div class="slide">
+            <div class="slide-counter">22 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Working with NULL Values</h1>
+                <p class="slide-subtitle">Handling Missing Data</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">IS NULL</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Find employees with no commission
+SELECT first_name, last_name, commission_pct
+FROM employees
+WHERE commission_pct IS NULL;</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">IS NOT NULL</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Find employees with commission
+SELECT first_name, last_name, commission_pct
+FROM employees
+WHERE commission_pct IS NOT NULL;</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">💡 Important Note</h3>
+                <div class="card-content">
+                    <p>Never use <span class="highlight">= NULL</span> or <span class="highlight">!= NULL</span>. 
+                    Always use <span class="highlight">IS NULL</span> or <span class="highlight">IS NOT NULL</span> when checking for NULL values.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 23: ORDER BY -->
+        <div class="slide">
+            <div class="slide-counter">23 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Sorting Data with ORDER BY</h1>
+                <p class="slide-subtitle">Organizing Your Results</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Basic Sorting</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Ascending order (default)
+SELECT first_name, last_name, salary
+FROM employees
+ORDER BY salary;
+
+-- Descending order
+SELECT first_name, last_name, salary
+FROM employees
+ORDER BY salary DESC;</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Multiple Column Sorting</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Sort by department, then by salary
+SELECT first_name, last_name, salary, department_id
+FROM employees
+ORDER BY department_id, salary DESC;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 24: Functions -->
+        <div class="slide">
+            <div class="slide-counter">24 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Built-in Functions</h1>
+                <p class="slide-subtitle">Transforming Your Data</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">String Functions</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Convert case
+SELECT UPPER(first_name), LOWER(last_name)
+FROM employees;
+
+-- String length
+SELECT first_name, LENGTH(first_name)
+FROM employees;</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Numeric Functions</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Round numbers
+SELECT salary, ROUND(salary/12, 2) as monthly
+FROM employees;
+
+-- Truncate numbers
+SELECT salary, TRUNC(salary/12, 2) as monthly
+FROM employees;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 25: Session 2 Overview (updated) -->
+        <div class="slide">
+            <div class="slide-counter">25 / 37</div>
+            <div class="session-badge">Session 2</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Session 2 Agenda</h1>
+                <p class="slide-subtitle">What We Will Cover</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Session 2 Topics</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Aggregate functions and GROUP BY</li>
+                        <li>JOIN operations</li>
+                        <li>Subqueries for complex data retrieval</li>
+                        <li>Data manipulation: INSERT, UPDATE, DELETE</li>
+                        <li>Practice exercises</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 26: Aggregate Functions -->
+        <div class="slide">
+            <div class="slide-counter">26 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Aggregate Functions</h1>
+                <p class="slide-subtitle">Summarizing Your Data</p>
+            </div>
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Function</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>COUNT(*)</strong></td>
+                            <td>Count all rows</td>
+                            <td>SELECT COUNT(*) FROM employees</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SUM()</strong></td>
+                            <td>Sum of values</td>
+                            <td>SELECT SUM(salary) FROM employees</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AVG()</strong></td>
+                            <td>Average of values</td>
+                            <td>SELECT AVG(salary) FROM employees</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MAX()</strong></td>
+                            <td>Maximum value</td>
+                            <td>SELECT MAX(salary) FROM employees</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MIN()</strong></td>
+                            <td>Minimum value</td>
+                            <td>SELECT MIN(salary) FROM employees</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 27: How Tables Relate: Keys & Foreign Keys (updated) -->
+        <div class="slide">
+            <div class="slide-counter">27 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">How Tables Relate: Keys & Foreign Keys</h1>
+                <p class="slide-subtitle">Keys and Foreign Keys</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Primary and Foreign Keys</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li><b>Primary Key:</b> Unique ID for each row (e.g., employee_id)</li>
+                        <li><b>Foreign Key:</b> Links to another table's primary key (e.g., department_id)</li>
+                        <li><b>Why:</b> They allow JOIN operations and maintain data integrity</li>
+                        <li><b>Example:</b> An employee belongs to a department — relationship via department_id</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 28: JOIN Operations -->
+        <div class="slide">
+            <div class="slide-counter">28 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">JOIN Operations</h1>
+                <p class="slide-subtitle">Combining Data from Multiple Tables</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">INNER JOIN</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Employees with department names
+SELECT e.first_name, e.last_name, d.department_name
+FROM employees e
+INNER JOIN departments d 
+ON e.department_id = d.department_id;</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">LEFT JOIN</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- All departments with employee count
+SELECT d.department_name, COUNT(e.employee_id)
+FROM departments d
+LEFT JOIN employees e 
+ON d.department_id = e.department_id
+GROUP BY d.department_name;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 29: Multiple JOINs -->
+        <div class="slide">
+            <div class="slide-counter">29 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Multiple Table JOINs</h1>
+                <p class="slide-subtitle">Connecting Multiple Data Sources</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Multiple Table JOINs</h3>
+                <div class="card-content">
+                    <div class="code-block">-- Employees with department and location info
+SELECT e.first_name, e.last_name, 
+       d.department_name, l.city, l.country_id
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.department_id
+INNER JOIN locations l ON d.location_id = l.location_id;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 30: Subqueries -->
+        <div class="slide">
+            <div class="slide-counter">30 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Subqueries</h1>
+                <p class="slide-subtitle">Queries within Queries</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Single-Row Subqueries</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Employee with highest salary
+SELECT first_name, last_name, salary
+FROM employees
+WHERE salary = (SELECT MAX(salary) FROM employees);
+
+-- Employees earning more than average
+SELECT first_name, last_name, salary
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Multiple-Row Subqueries</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Employees in departments located in the US
+SELECT first_name, last_name, department_id
+FROM employees
+WHERE department_id IN (
+    SELECT d.department_id
+    FROM departments d
+    JOIN locations l ON d.location_id = l.location_id
+    WHERE l.country_id = 'US'
+);</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Correlated & EXISTS Subqueries</h3>
+                <div class="card-content">
+                    <div class="code-block">-- Employees earning more than average in their department
+SELECT first_name, last_name, salary, department_id
+FROM employees e1
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees e2
+    WHERE e2.department_id = e1.department_id
+);
+
+-- Employees who are also managers
+SELECT first_name, last_name
+FROM employees e
+WHERE EXISTS (
+    SELECT 1 FROM employees
+    WHERE manager_id = e.employee_id
+);</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 31: Data Manipulation (DML) -->
+        <div class="slide">
+            <div class="slide-counter">31 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Data Manipulation (DML)</h1>
+                <p class="slide-subtitle">INSERT, UPDATE, DELETE, COMMIT, ROLLBACK</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">INSERT & UPDATE</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Insert new employee
+INSERT INTO employees (
+    employee_id, first_name, last_name, email, 
+    hire_date, job_id, salary, department_id
+) VALUES (
+    207, 'John', 'Doe', 'JDOE', 
+    SYSDATE, 'IT_PROG', 6000, 60
+);
+
+-- Update employee salary
+UPDATE employees
+SET salary = salary * 1.1
+WHERE department_id = 60;</div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">DELETE, COMMIT, ROLLBACK</h3>
+                    <div class="card-content">
+                        <div class="code-block">-- Delete specific employee
+DELETE FROM employees
+WHERE employee_id = 207;
+
+-- Save changes
+COMMIT;
+
+-- Undo changes
+ROLLBACK;</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">UPDATE with Subquery</h3>
+                <div class="card-content">
+                    <div class="code-block">-- Update with subquery
+UPDATE employees
+SET salary = (
+    SELECT AVG(salary) FROM employees WHERE department_id = 50
+)
+WHERE employee_id = 207;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 32: Practice Exercises (Session 2) -->
+        <div class="slide">
+            <div class="slide-counter">32 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Practice Exercises</h1>
+                <p class="slide-subtitle">Session 2 Challenges</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Try These!</h3>
+                    <div class="card-content">
+                        <ul class="bullet-list">
+                            <li>Find the average salary for each department</li>
+                            <li>List all employees with their department names and cities</li>
+                            <li>Find employees who earn more than the average salary</li>
+                            <li>Display the top 5 highest-paid employees</li>
+                            <li>Create a report showing department name, employee count, and average salary</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 33: Real-World SQL (new) -->
+        <div class="slide">
+            <div class="slide-counter">33 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Real-World SQL</h1>
+                <p class="slide-subtitle">Applying SQL in the Workplace</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Example Scenarios</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Payroll report: calculate total salary by department</li>
+                        <li>Sales report: join products and orders tables</li>
+                        <li>HR report: list employees earning above average salary</li>
+                        <li>Support report: find unresolved tickets by technician</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 34: Key Takeaways -->
+        <div class="slide">
+            <div class="slide-counter">34 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Key Takeaways</h1>
+                <p class="slide-subtitle">What You’ve Learned</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Session 1 Summary</h3>
+                    <div class="card-content">
+                        <ul class="bullet-list">
+                            <li>Basic SELECT statements with column selection and aliases</li>
+                            <li>WHERE clause for filtering with various operators</li>
+                            <li>Pattern matching with LIKE</li>
+                            <li>Sorting data with ORDER BY</li>
+                            <li>Basic built-in functions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Session 2 Summary</h3>
+                    <div class="card-content">
+                        <ul class="bullet-list">
+                            <li>Aggregate functions for data analysis</li>
+                            <li>GROUP BY and HAVING for grouped data</li>
+                            <li>JOIN operations for multi-table queries</li>
+                            <li>Subqueries for complex data retrieval</li>
+                            <li>Basic DML operations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 35: Common SQL Mistakes (new) -->
+        <div class="slide">
+            <div class="slide-counter">35 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Common SQL Mistakes</h1>
+                <p class="slide-subtitle">Learn from Errors</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Frequent Pitfalls</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Forgetting GROUP BY with aggregates</li>
+                        <li>Using = NULL instead of IS NULL</li>
+                        <li>Mixing non-aggregated columns with aggregates</li>
+                        <li>Missing aliases in multi-table joins</li>
+                        <li>Not testing on small datasets first</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 36: Best Practices & Next Steps -->
+        <div class="slide">
+            <div class="slide-counter">36 / 37</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Best Practices & Next Steps</h1>
+                <p class="slide-subtitle">Continue Your SQL Journey</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Best Practices</h3>
+                    <div class="card-content">
+                        <ul class="bullet-list">
+                            <li>Always use table aliases in multi-table queries</li>
+                            <li>Use meaningful column aliases for better readability</li>
+                            <li>Test queries with small datasets first</li>
+                            <li>Use COMMIT/ROLLBACK appropriately with DML operations</li>
+                            <li>Format your SQL code for better readability</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Next Steps</h3>
+                    <div class="card-content">
+                        <ul class="bullet-list">
+                            <li>Master PL/SQL for stored procedures and triggers</li>
+                            <li>Explore analytical functions (e.g., RANK, LEAD, LAG)</li>
+                            <li>Learn about query tuning and execution plans</li>
+                            <li>Practice on SQLZoo or Mode Analytics</li>
+                            <li>Consider Oracle SQL Certification (1Z0-071)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons (if missing, add here) -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn">Previous</button>
+            <button class="nav-btn" id="nextBtn">Next</button>
+        </div>
+
+    </div> <!-- End presentation-container -->
+    <button class="dark-toggle" id="darkToggle">🌙 Dark Mode</button>
+    <script>
+    // Navigation logic (if not present, add basic logic)
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressBar = document.getElementById('progressBar');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === slides.length - 1;
+        // Update progress bar
+        progressBar.style.width = ((index + 1) / slides.length * 100) + '%';
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentSlide > 0) {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentSlide < slides.length - 1) {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevBtn.click();
+        } else if (e.key === 'ArrowRight') {
+            nextBtn.click();
+        }
+    });
+
+    // Dark mode toggle
+    const darkToggle = document.getElementById('darkToggle');
+    darkToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        darkToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    // Add copy buttons to code blocks
+    document.querySelectorAll('.code-block').forEach(block => {
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.onclick = function() {
+            const code = block.innerText;
+            navigator.clipboard.writeText(code);
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+            }, 1200);
+        };
+        block.style.position = 'relative';
+        block.appendChild(btn);
+    });
+
+    // Initialize
+    showSlide(currentSlide);
+    </script>
+</body>
+</html>
