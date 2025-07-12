@@ -406,6 +406,7 @@
             background: #667eea;
             border-radius: 2px;
             transition: width 0.3s ease;
+            z-index: 1002;
         }
 
         .learning-objectives {
@@ -836,6 +837,17 @@
         body.dark-mode .quiz-option.incorrect {
             background: #e74c3c;
             color: white;
+        }
+
+        /* Progress bar visibility */
+        .progress-bar {
+            background: #feca57;
+            box-shadow: 0 2px 4px rgba(254, 202, 87, 0.5);
+        }
+
+        body.dark-mode .progress-bar {
+            background: #feca57;
+            box-shadow: 0 2px 4px rgba(254, 202, 87, 0.7);
         }
         /* Copy button styles */
         .copy-btn {
