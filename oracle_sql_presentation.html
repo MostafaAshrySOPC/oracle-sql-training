@@ -1281,7 +1281,7 @@
             <div class="content-card full-width">
                 <h3 class="card-title">Example: Complete SQL Workflow</h3>
                 <div class="card-content">
-                    <div class="code-block">-- DDL: Create table
+                                            <div class="code-block">-- DDL: Create table
 CREATE TABLE employees (
     employee_id INT PRIMARY KEY,
     first_name VARCHAR(50),
@@ -1290,10 +1290,13 @@ CREATE TABLE employees (
 );
 
 -- DML: Insert data
-INSERT INTO employees VALUES (1, 'John', 'Doe', 50000);
+INSERT INTO employees 
+VALUES (1, 'John', 'Doe', 50000);
 
 -- DQL: Query data
-SELECT * FROM employees WHERE salary > 40000;
+SELECT * 
+FROM employees 
+WHERE salary > 40000;
 
 -- TCL: Commit changes
 COMMIT;</div>
@@ -1393,14 +1396,15 @@ COMMIT;</div>
                 <div class="content-card">
                     <h3 class="card-title">Basic Syntax</h3>
                     <div class="card-content">
-                        <div class="code-block">SELECT column1, column2, ...
+                        <div class="code-block">SELECT column1, column2, ...<br>
 FROM table_name;</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">Select All Columns</h3>
                     <div class="card-content">
-                        <div class="code-block">SELECT * FROM employees;</div>
+                        <div class="code-block">SELECT * <br>
+FROM employees;</div>
                     </div>
                 </div>
             </div>
@@ -1408,15 +1412,15 @@ FROM table_name;</div>
                 <div class="content-card">
                     <h3 class="card-title">Select Specific Columns</h3>
                     <div class="card-content">
-                        <div class="code-block">SELECT first_name, last_name, salary 
+                        <div class="code-block">SELECT first_name, last_name, salary <br>
 FROM employees;</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">Using Column Aliases</h3>
                     <div class="card-content">
-                        <div class="code-block">SELECT first_name AS "First Name", 
-       salary AS "Monthly Salary"
+                        <div class="code-block">SELECT first_name AS "First Name", <br>
+       salary AS "Monthly Salary"<br>
 FROM employees;</div>
                     </div>
                 </div>
@@ -1434,8 +1438,8 @@ FROM employees;</div>
                 <div class="content-card">
                     <h3 class="card-title">Basic WHERE Syntax</h3>
                     <div class="card-content">
-                        <div class="code-block">SELECT column1, column2
-FROM table_name
+                        <div class="code-block">SELECT column1, column2<br>
+FROM table_name<br>
 WHERE condition;</div>
                     </div>
                 </div>
@@ -1453,14 +1457,14 @@ WHERE condition;</div>
             <div class="content-card full-width">
                 <h3 class="card-title">Examples</h3>
                 <div class="card-content">
-                    <div class="code-block">-- Find employees with salary greater than 10000
-SELECT first_name, last_name, salary
-FROM employees
-WHERE salary > 10000;
-
--- Find employees in department 50
-SELECT first_name, last_name, department_id
-FROM employees
+                    <div class="code-block">-- Find employees with salary greater than 10000<br>
+SELECT first_name, last_name, salary<br>
+FROM employees<br>
+WHERE salary > 10000;<br>
+<br>
+-- Find employees in department 50<br>
+SELECT first_name, last_name, department_id<br>
+FROM employees<br>
 WHERE department_id = 50;</div>
                 </div>
             </div>
@@ -1486,14 +1490,14 @@ WHERE department_id = 50;</div>
                 <div class="content-card">
                     <h3 class="card-title">Examples</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Names starting with 'J'
-SELECT first_name, last_name
-FROM employees
-WHERE first_name LIKE 'J%';
-
--- Second letter is 'o'
-SELECT first_name, last_name
-FROM employees
+                        <div class="code-block">-- Names starting with 'J'<br>
+SELECT first_name, last_name<br>
+FROM employees<br>
+WHERE first_name LIKE 'J%';<br>
+<br>
+-- Second letter is 'o'<br>
+SELECT first_name, last_name<br>
+FROM employees<br>
 WHERE first_name LIKE '_o%';</div>
                     </div>
                 </div>
@@ -1511,29 +1515,31 @@ WHERE first_name LIKE '_o%';</div>
                 <div class="content-card">
                     <h3 class="card-title">IN and BETWEEN</h3>
                     <div class="card-content">
-                        <div class="code-block">-- IN operator
-SELECT first_name, department_id
-FROM employees
-WHERE department_id IN (10, 20, 30);
-
--- BETWEEN operator
-SELECT first_name, salary
-FROM employees
+                        <div class="code-block">-- IN operator<br>
+SELECT first_name, department_id<br>
+FROM employees<br>
+WHERE department_id IN (10, 20, 30);<br>
+<br>
+-- BETWEEN operator<br>
+SELECT first_name, salary<br>
+FROM employees<br>
 WHERE salary BETWEEN 5000 AND 10000;</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">Logical Operators</h3>
                     <div class="card-content">
-                        <div class="code-block">-- AND operator
-SELECT first_name, salary
-FROM employees
-WHERE salary > 8000 AND department_id = 60;
-
--- OR operator
-SELECT first_name, job_id
-FROM employees
-WHERE job_id = 'IT_PROG' OR job_id = 'SA_REP';</div>
+                        <div class="code-block">-- AND operator<br>
+SELECT first_name, salary<br>
+FROM employees<br>
+WHERE salary > 8000 <br>
+  AND department_id = 60;<br>
+<br>
+-- OR operator<br>
+SELECT first_name, job_id<br>
+FROM employees<br>
+WHERE job_id = 'IT_PROG' <br>
+   OR job_id = 'SA_REP';</div>
                     </div>
                 </div>
             </div>
@@ -1550,18 +1556,18 @@ WHERE job_id = 'IT_PROG' OR job_id = 'SA_REP';</div>
                 <div class="content-card">
                     <h3 class="card-title">IS NULL</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Find employees with no commission
-SELECT first_name, last_name, commission_pct
-FROM employees
+                        <div class="code-block">-- Find employees with no commission<br>
+SELECT first_name, last_name, commission_pct<br>
+FROM employees<br>
 WHERE commission_pct IS NULL;</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">IS NOT NULL</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Find employees with commission
-SELECT first_name, last_name, commission_pct
-FROM employees
+                        <div class="code-block">-- Find employees with commission<br>
+SELECT first_name, last_name, commission_pct<br>
+FROM employees<br>
 WHERE commission_pct IS NOT NULL;</div>
                     </div>
                 </div>
@@ -1586,23 +1592,23 @@ WHERE commission_pct IS NOT NULL;</div>
                 <div class="content-card">
                     <h3 class="card-title">Basic Sorting</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Ascending order (default)
-SELECT first_name, last_name, salary
-FROM employees
-ORDER BY salary;
-
--- Descending order
-SELECT first_name, last_name, salary
-FROM employees
+                        <div class="code-block">-- Ascending order (default)<br>
+SELECT first_name, last_name, salary<br>
+FROM employees<br>
+ORDER BY salary;<br>
+<br>
+-- Descending order<br>
+SELECT first_name, last_name, salary<br>
+FROM employees<br>
 ORDER BY salary DESC;</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">Multiple Column Sorting</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Sort by department, then by salary
-SELECT first_name, last_name, salary, department_id
-FROM employees
+                        <div class="code-block">-- Sort by department, then by salary<br>
+SELECT first_name, last_name, salary, department_id<br>
+FROM employees<br>
 ORDER BY department_id, salary DESC;</div>
                     </div>
                 </div>
@@ -1620,24 +1626,24 @@ ORDER BY department_id, salary DESC;</div>
                 <div class="content-card">
                     <h3 class="card-title">String Functions</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Convert case
-SELECT UPPER(first_name), LOWER(last_name)
-FROM employees;
-
--- String length
-SELECT first_name, LENGTH(first_name)
+                        <div class="code-block">-- Convert case<br>
+SELECT UPPER(first_name), LOWER(last_name)<br>
+FROM employees;<br>
+<br>
+-- String length<br>
+SELECT first_name, LENGTH(first_name)<br>
 FROM employees;</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">Numeric Functions</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Round numbers
-SELECT salary, ROUND(salary/12, 2) as monthly
-FROM employees;
-
--- Truncate numbers
-SELECT salary, TRUNC(salary/12, 2) as monthly
+                        <div class="code-block">-- Round numbers<br>
+SELECT salary, ROUND(salary/12, 2) as monthly<br>
+FROM employees;<br>
+<br>
+-- Truncate numbers<br>
+SELECT salary, TRUNC(salary/12, 2) as monthly<br>
 FROM employees;</div>
                     </div>
                 </div>
@@ -1686,27 +1692,27 @@ FROM employees;</div>
                         <tr>
                             <td><strong>COUNT(*)</strong></td>
                             <td>Count all rows</td>
-                            <td>SELECT COUNT(*) FROM employees</td>
+                            <td>SELECT COUNT(*) <br>FROM employees</td>
                         </tr>
                         <tr>
                             <td><strong>SUM()</strong></td>
                             <td>Sum of values</td>
-                            <td>SELECT SUM(salary) FROM employees</td>
+                            <td>SELECT SUM(salary) <br>FROM employees</td>
                         </tr>
                         <tr>
                             <td><strong>AVG()</strong></td>
                             <td>Average of values</td>
-                            <td>SELECT AVG(salary) FROM employees</td>
+                            <td>SELECT AVG(salary) <br>FROM employees</td>
                         </tr>
                         <tr>
                             <td><strong>MAX()</strong></td>
                             <td>Maximum value</td>
-                            <td>SELECT MAX(salary) FROM employees</td>
+                            <td>SELECT MAX(salary) <br>FROM employees</td>
                         </tr>
                         <tr>
                             <td><strong>MIN()</strong></td>
                             <td>Minimum value</td>
-                            <td>SELECT MIN(salary) FROM employees</td>
+                            <td>SELECT MIN(salary) <br>FROM employees</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1742,23 +1748,21 @@ FROM employees;</div>
             </div>
             <div class="content-grid">
                 <div class="content-card">
-                    <h3 class="card-title">INNER JOIN</h3>
+                    <h3 class="card-title">INNER JOIN (WHERE Clause)</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Employees with department names
-SELECT e.first_name, e.last_name, d.department_name
-FROM employees e
-INNER JOIN departments d 
-ON e.department_id = d.department_id;</div>
+                        <div class="code-block">-- Employees with department names<br>
+SELECT e.first_name, e.last_name, d.department_name<br>
+FROM employees e, departments d<br>
+WHERE e.department_id = d.department_id;</div>
                     </div>
                 </div>
                 <div class="content-card">
-                    <h3 class="card-title">LEFT JOIN</h3>
+                    <h3 class="card-title">LEFT JOIN (Outer Join with (+))</h3>
                     <div class="card-content">
-                        <div class="code-block">-- All departments with employee count
-SELECT d.department_name, COUNT(e.employee_id)
-FROM departments d
-LEFT JOIN employees e 
-ON d.department_id = e.department_id
+                        <div class="code-block">-- All departments with employee count<br>
+SELECT d.department_name, COUNT(e.employee_id)<br>
+FROM departments d, employees e<br>
+WHERE d.department_id = e.department_id(+)<br>
 GROUP BY d.department_name;</div>
                     </div>
                 </div>
@@ -1773,14 +1777,14 @@ GROUP BY d.department_name;</div>
                 <p class="slide-subtitle">Connecting Multiple Data Sources</p>
             </div>
             <div class="content-card full-width">
-                <h3 class="card-title">Multiple Table JOINs</h3>
+                <h3 class="card-title">Multiple Table JOINs (WHERE Clause)</h3>
                 <div class="card-content">
-                    <div class="code-block">-- Employees with department and location info
-SELECT e.first_name, e.last_name, 
-       d.department_name, l.city, l.country_id
-FROM employees e
-INNER JOIN departments d ON e.department_id = d.department_id
-INNER JOIN locations l ON d.location_id = l.location_id;</div>
+                    <div class="code-block">-- Employees with department and location info<br>
+SELECT e.first_name, e.last_name, <br>
+       d.department_name, l.city, l.country_id<br>
+FROM employees e, departments d, locations l<br>
+WHERE e.department_id = d.department_id<br>
+  AND d.location_id = l.location_id;</div>
                 </div>
             </div>
         </div>
@@ -1796,28 +1800,28 @@ INNER JOIN locations l ON d.location_id = l.location_id;</div>
                 <div class="content-card">
                     <h3 class="card-title">Single-Row Subqueries</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Employee with highest salary
-SELECT first_name, last_name, salary
-FROM employees
-WHERE salary = (SELECT MAX(salary) FROM employees);
-
--- Employees earning more than average
-SELECT first_name, last_name, salary
-FROM employees
+                        <div class="code-block">-- Employee with highest salary<br>
+SELECT first_name, last_name, salary<br>
+FROM employees<br>
+WHERE salary = (SELECT MAX(salary) FROM employees);<br>
+<br>
+-- Employees earning more than average<br>
+SELECT first_name, last_name, salary<br>
+FROM employees<br>
 WHERE salary > (SELECT AVG(salary) FROM employees);</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">Multiple-Row Subqueries</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Employees in departments located in the US
-SELECT first_name, last_name, department_id
-FROM employees
-WHERE department_id IN (
-    SELECT d.department_id
-    FROM departments d
-    JOIN locations l ON d.location_id = l.location_id
-    WHERE l.country_id = 'US'
+                        <div class="code-block">-- Employees in departments located in the US<br>
+SELECT first_name, last_name, department_id<br>
+FROM employees<br>
+WHERE department_id IN (<br>
+    SELECT d.department_id<br>
+    FROM departments d, locations l<br>
+    WHERE d.location_id = l.location_id<br>
+      AND l.country_id = 'US'<br>
 );</div>
                     </div>
                 </div>
@@ -1825,21 +1829,22 @@ WHERE department_id IN (
             <div class="content-card full-width">
                 <h3 class="card-title">Correlated & EXISTS Subqueries</h3>
                 <div class="card-content">
-                    <div class="code-block">-- Employees earning more than average in their department
-SELECT first_name, last_name, salary, department_id
-FROM employees e1
-WHERE salary > (
-    SELECT AVG(salary)
-    FROM employees e2
-    WHERE e2.department_id = e1.department_id
-);
-
--- Employees who are also managers
-SELECT first_name, last_name
-FROM employees e
-WHERE EXISTS (
-    SELECT 1 FROM employees
-    WHERE manager_id = e.employee_id
+                    <div class="code-block">-- Employees earning more than average in their department<br>
+SELECT first_name, last_name, salary, department_id<br>
+FROM employees e1<br>
+WHERE salary > (<br>
+    SELECT AVG(salary)<br>
+    FROM employees e2<br>
+    WHERE e2.department_id = e1.department_id<br>
+);<br>
+<br>
+-- Employees who are also managers<br>
+SELECT first_name, last_name<br>
+FROM employees e<br>
+WHERE EXISTS (<br>
+    SELECT 1 <br>
+    FROM employees<br>
+    WHERE manager_id = e.employee_id<br>
 );</div>
                 </div>
             </div>
@@ -1856,32 +1861,32 @@ WHERE EXISTS (
                 <div class="content-card">
                     <h3 class="card-title">INSERT & UPDATE</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Insert new employee
-INSERT INTO employees (
-    employee_id, first_name, last_name, email, 
-    hire_date, job_id, salary, department_id
-) VALUES (
-    207, 'John', 'Doe', 'JDOE', 
-    SYSDATE, 'IT_PROG', 6000, 60
-);
-
--- Update employee salary
-UPDATE employees
-SET salary = salary * 1.1
+                        <div class="code-block">-- Insert new employee<br>
+INSERT INTO employees (<br>
+    employee_id, first_name, last_name, email, <br>
+    hire_date, job_id, salary, department_id<br>
+) VALUES (<br>
+    207, 'John', 'Doe', 'JDOE', <br>
+    SYSDATE, 'IT_PROG', 6000, 60<br>
+);<br>
+<br>
+-- Update employee salary<br>
+UPDATE employees<br>
+SET salary = salary * 1.1<br>
 WHERE department_id = 60;</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">DELETE, COMMIT, ROLLBACK</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Delete specific employee
-DELETE FROM employees
-WHERE employee_id = 207;
-
--- Save changes
-COMMIT;
-
--- Undo changes
+                        <div class="code-block">-- Delete specific employee<br>
+DELETE FROM employees<br>
+WHERE employee_id = 207;<br>
+<br>
+-- Save changes<br>
+COMMIT;<br>
+<br>
+-- Undo changes<br>
 ROLLBACK;</div>
                     </div>
                 </div>
@@ -1889,11 +1894,13 @@ ROLLBACK;</div>
             <div class="content-card full-width">
                 <h3 class="card-title">UPDATE with Subquery</h3>
                 <div class="card-content">
-                    <div class="code-block">-- Update with subquery
-UPDATE employees
-SET salary = (
-    SELECT AVG(salary) FROM employees WHERE department_id = 50
-)
+                    <div class="code-block">-- Update with subquery<br>
+UPDATE employees<br>
+SET salary = (<br>
+    SELECT AVG(salary) <br>
+    FROM employees <br>
+    WHERE department_id = 50<br>
+)<br>
 WHERE employee_id = 207;</div>
                 </div>
             </div>
@@ -2044,19 +2051,19 @@ WHERE employee_id = 207;</div>
                 <div class="content-card">
                     <h3 class="card-title">ROW_NUMBER()</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Rank employees by salary
-SELECT first_name, last_name, salary,
-       ROW_NUMBER() OVER (ORDER BY salary DESC) as rank
+                        <div class="code-block">-- Rank employees by salary<br>
+SELECT first_name, last_name, salary,<br>
+       ROW_NUMBER() OVER (ORDER BY salary DESC) as rank<br>
 FROM employees;</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">RANK() and DENSE_RANK()</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Rank with ties
-SELECT first_name, salary,
-       RANK() OVER (ORDER BY salary DESC) as rank,
-       DENSE_RANK() OVER (ORDER BY salary DESC) as dense_rank
+                        <div class="code-block">-- Rank with ties<br>
+SELECT first_name, salary,<br>
+       RANK() OVER (ORDER BY salary DESC) as rank,<br>
+       DENSE_RANK() OVER (ORDER BY salary DESC) as dense_rank<br>
 FROM employees;</div>
                     </div>
                 </div>
@@ -2064,10 +2071,10 @@ FROM employees;</div>
             <div class="content-card full-width">
                 <h3 class="card-title">LAG() and LEAD()</h3>
                 <div class="card-content">
-                    <div class="code-block">-- Compare with previous/next salary
-SELECT first_name, salary,
-       LAG(salary) OVER (ORDER BY salary) as prev_salary,
-       LEAD(salary) OVER (ORDER BY salary) as next_salary
+                    <div class="code-block">-- Compare with previous/next salary<br>
+SELECT first_name, salary,<br>
+       LAG(salary) OVER (ORDER BY salary) as prev_salary,<br>
+       LEAD(salary) OVER (ORDER BY salary) as next_salary<br>
 FROM employees;</div>
                 </div>
             </div>
@@ -2117,16 +2124,18 @@ FROM employees;</div>
                 <div class="content-card">
                     <h3 class="card-title">❌ Vulnerable Code</h3>
                     <div class="card-content">
-                        <div class="code-block">-- DON'T DO THIS
-SELECT * FROM employees 
+                        <div class="code-block">-- DON'T DO THIS<br>
+SELECT * <br>
+FROM employees <br>
 WHERE last_name = '" + userInput + "';</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">✅ Secure Code</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Use parameterized queries
-SELECT * FROM employees 
+                        <div class="code-block">-- Use parameterized queries<br>
+SELECT * <br>
+FROM employees <br>
 WHERE last_name = ?;</div>
                     </div>
                 </div>
@@ -2144,36 +2153,11 @@ WHERE last_name = ?;</div>
             </div>
         </div>
 
-        <!-- Slide 40: Interactive Quiz (NEW) -->
-        <div class="slide">
-            <div class="slide-counter">41 / 43</div>
-            <div class="slide-header">
-                <h1 class="slide-title">Knowledge Check</h1>
-                <p class="slide-subtitle">Test Your Understanding</p>
-            </div>
-            <div class="quiz-container">
-                <div class="quiz-question">What SQL clause is used to filter data?</div>
-                <div class="quiz-options">
-                    <div class="quiz-option" data-correct="true">WHERE</div>
-                    <div class="quiz-option" data-correct="false">SELECT</div>
-                    <div class="quiz-option" data-correct="false">FROM</div>
-                    <div class="quiz-option" data-correct="false">ORDER BY</div>
-                </div>
-            </div>
-            <div class="quiz-container">
-                <div class="quiz-question">Which operator should you use to check for NULL values?</div>
-                <div class="quiz-options">
-                    <div class="quiz-option" data-correct="false">= NULL</div>
-                    <div class="quiz-option" data-correct="true">IS NULL</div>
-                    <div class="quiz-option" data-correct="false">== NULL</div>
-                    <div class="quiz-option" data-correct="false">NULL()</div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- Slide 41: Real-World Case Studies (NEW) -->
         <div class="slide">
-            <div class="slide-counter">42 / 43</div>
+            <div class="slide-counter">41 / 43</div>
             <div class="slide-header">
                 <h1 class="slide-title">Real-World Case Studies</h1>
                 <p class="slide-subtitle">Business Applications</p>
@@ -2182,29 +2166,29 @@ WHERE last_name = ?;</div>
                 <div class="content-card">
                     <h3 class="card-title">E-commerce Analytics</h3>
                     <div class="card-content">
-                        <div class="code-block">-- Top selling products
-SELECT p.product_name, 
-       COUNT(o.order_id) as total_orders,
-       SUM(oi.quantity * oi.unit_price) as revenue
-FROM products p
-JOIN order_items oi ON p.product_id = oi.product_id
-JOIN orders o ON oi.order_id = o.order_id
-GROUP BY p.product_id, p.product_name
+                        <div class="code-block">-- Top selling products<br>
+SELECT p.product_name, <br>
+       COUNT(o.order_id) as total_orders,<br>
+       SUM(oi.quantity * oi.unit_price) as revenue<br>
+FROM products p, order_items oi, orders o<br>
+WHERE p.product_id = oi.product_id<br>
+  AND oi.order_id = o.order_id<br>
+GROUP BY p.product_id, p.product_name<br>
 ORDER BY revenue DESC;</div>
                     </div>
                 </div>
                 <div class="content-card">
                     <h3 class="card-title">Customer Segmentation</h3>
                     <div class="card-content">
-                        <div class="code-block">-- High-value customers
-SELECT customer_id, 
-       SUM(order_total) as total_spent,
-       CASE 
-           WHEN SUM(order_total) > 10000 THEN 'Premium'
-           WHEN SUM(order_total) > 5000 THEN 'Gold'
-           ELSE 'Standard'
-       END as segment
-FROM orders
+                        <div class="code-block">-- High-value customers<br>
+SELECT customer_id, <br>
+       SUM(order_total) as total_spent,<br>
+       CASE <br>
+           WHEN SUM(order_total) > 10000 THEN 'Premium'<br>
+           WHEN SUM(order_total) > 5000 THEN 'Gold'<br>
+           ELSE 'Standard'<br>
+       END as segment<br>
+FROM orders<br>
 GROUP BY customer_id;</div>
                     </div>
                 </div>
@@ -2213,7 +2197,7 @@ GROUP BY customer_id;</div>
 
         <!-- Slide 42: Troubleshooting Guide (NEW) -->
         <div class="slide">
-            <div class="slide-counter">43 / 43</div>
+            <div class="slide-counter">42 / 43</div>
             <div class="slide-header">
                 <h1 class="slide-title">Troubleshooting Guide</h1>
                 <p class="slide-subtitle">Common Oracle SQL Errors</p>
@@ -2250,6 +2234,33 @@ GROUP BY customer_id;</div>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <!-- Slide 43: Knowledge Check (MOVED TO END) -->
+        <div class="slide">
+            <div class="slide-counter">43 / 43</div>
+            <div class="slide-header">
+                <h1 class="slide-title">Knowledge Check</h1>
+                <p class="slide-subtitle">Test Your Understanding</p>
+            </div>
+            <div class="quiz-container">
+                <div class="quiz-question">What SQL clause is used to filter data?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="true">WHERE</div>
+                    <div class="quiz-option" data-correct="false">SELECT</div>
+                    <div class="quiz-option" data-correct="false">FROM</div>
+                    <div class="quiz-option" data-correct="false">ORDER BY</div>
+                </div>
+            </div>
+            <div class="quiz-container">
+                <div class="quiz-question">Which operator should you use to check for NULL values?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false">= NULL</div>
+                    <div class="quiz-option" data-correct="true">IS NULL</div>
+                    <div class="quiz-option" data-correct="false">== NULL</div>
+                    <div class="quiz-option" data-correct="false">NULL()</div>
+                </div>
             </div>
         </div>
 
