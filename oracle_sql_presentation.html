@@ -28,6 +28,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            padding-top: 60px;
         }
 
         .slide {
@@ -161,7 +162,7 @@
         /* Search functionality */
         .search-container {
             position: fixed;
-            top: 20px;
+            top: 10px;
             right: 100px;
             z-index: 1000;
         }
@@ -447,10 +448,19 @@
                 grid-template-columns: 1fr;
             }
             
+            .presentation-container {
+                padding-top: 80px;
+            }
+            
             .slide {
                 padding: 20px;
                 height: 95%;
                 width: 95%;
+            }
+
+            .slide-header {
+                margin-top: 0;
+                margin-bottom: 30px;
             }
             
             .slide-title {
@@ -500,21 +510,23 @@
             }
 
             .search-container {
-                top: 10px;
-                right: 60px;
+                top: 5px;
+                right: 50px;
+                z-index: 1001;
             }
 
             .search-input {
-                width: 150px;
+                width: 140px;
                 font-size: 0.8rem;
                 padding: 6px 12px;
             }
 
             .dark-toggle {
-                top: 10px;
-                left: 15px;
+                top: 5px;
+                left: 10px;
                 padding: 6px 12px;
                 font-size: 0.8rem;
+                z-index: 1001;
             }
 
             .slide-counter {
@@ -557,10 +569,19 @@
         }
 
         @media (max-width: 480px) {
+            .presentation-container {
+                padding-top: 70px;
+            }
+            
             .slide {
                 padding: 15px;
                 height: 98%;
                 width: 98%;
+            }
+
+            .slide-header {
+                margin-top: 0;
+                margin-bottom: 25px;
             }
             
             .slide-title {
@@ -609,21 +630,23 @@
             }
 
             .search-container {
-                top: 5px;
-                right: 50px;
+                top: 2px;
+                right: 45px;
+                z-index: 1001;
             }
 
             .search-input {
-                width: 120px;
+                width: 110px;
                 font-size: 0.75rem;
                 padding: 5px 10px;
             }
 
             .dark-toggle {
-                top: 5px;
-                left: 10px;
+                top: 2px;
+                left: 8px;
                 padding: 5px 10px;
                 font-size: 0.75rem;
+                z-index: 1001;
             }
 
             .slide-counter {
@@ -675,13 +698,13 @@
         }
         
         body.dark-mode {
-            --bg-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
-            --slide-bg: #232526;
-            --text-color: #ecf0f1;
-            --card-bg: #2c3e50;
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --slide-bg: #0f0f23;
+            --text-color: #ffffff;
+            --card-bg: #1a1a2e;
             --highlight-bg: linear-gradient(120deg, #667eea 0%, #764ba2 100%);
-            --code-bg: #111;
-            --code-color: #a8edea;
+            --code-bg: #1e1e1e;
+            --code-color: #d4d4d4;
         }
         
         body {
@@ -700,6 +723,119 @@
         .code-block {
             background: var(--code-bg);
             color: var(--code-color);
+        }
+
+        /* Dark mode specific improvements */
+        body.dark-mode .slide-title {
+            color: #ffffff;
+        }
+
+        body.dark-mode .slide-subtitle {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .card-title {
+            color: #ffffff;
+        }
+
+        body.dark-mode .card-content {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .bullet-list li {
+            color: #e0e0e0;
+            border-left-color: #667eea;
+        }
+
+        body.dark-mode .styled-table th {
+            background: #667eea;
+            color: white;
+        }
+
+        body.dark-mode .styled-table td {
+            color: #e0e0e0;
+            border-bottom-color: #444;
+        }
+
+        body.dark-mode .styled-table tbody tr:hover {
+            background: #2a2a3e;
+        }
+
+        body.dark-mode .search-input {
+            background: rgba(255,255,255,0.1);
+            color: #ffffff;
+            border: 1px solid #444;
+        }
+
+        body.dark-mode .search-input::placeholder {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .search-results {
+            background: #1a1a2e;
+            border: 1px solid #444;
+        }
+
+        body.dark-mode .search-result-item {
+            color: #e0e0e0;
+            border-bottom-color: #444;
+        }
+
+        body.dark-mode .search-result-item:hover {
+            background: #2a2a3e;
+        }
+
+        body.dark-mode .nav-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        body.dark-mode .nav-btn:hover {
+            background: #5a6fd8;
+        }
+
+        body.dark-mode .nav-btn:disabled {
+            background: #444;
+            color: #888;
+        }
+
+        body.dark-mode .slide-counter {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        body.dark-mode .session-badge {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        body.dark-mode .quiz-container {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        body.dark-mode .quiz-option {
+            background: rgba(255,255,255,0.1);
+            color: #ffffff;
+        }
+
+        body.dark-mode .quiz-option:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        body.dark-mode .quiz-option.selected {
+            background: #feca57;
+            color: #2c3e50;
+        }
+
+        body.dark-mode .quiz-option.correct {
+            background: #27ae60;
+            color: white;
+        }
+
+        body.dark-mode .quiz-option.incorrect {
+            background: #e74c3c;
+            color: white;
         }
         /* Copy button styles */
         .copy-btn {
@@ -724,7 +860,7 @@
         }
         .dark-toggle {
             position: fixed;
-            top: 20px;
+            top: 10px;
             left: 30px;
             z-index: 1000;
             background: #667eea;
