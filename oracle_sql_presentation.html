@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>Oracle SQL Training</title>
     <!-- Syntax highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
@@ -324,6 +324,10 @@
             cursor: pointer;
             font-size: 1rem;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            min-height: 44px;
+            min-width: 44px;
         }
 
         .nav-btn:hover {
@@ -444,11 +448,218 @@
             }
             
             .slide {
-                padding: 30px;
+                padding: 20px;
+                height: 95%;
+                width: 95%;
             }
             
             .slide-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+
+            .slide-subtitle {
+                font-size: 1rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .card-content {
+                font-size: 0.9rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 20px 40px 15px 40px;
+                overflow-x: auto;
+            }
+
+            .bullet-list li {
+                padding: 8px 0;
+                font-size: 0.9rem;
+            }
+
+            .styled-table {
+                font-size: 0.8rem;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 8px;
+            }
+
+            .navigation {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .search-container {
+                top: 10px;
+                right: 60px;
+            }
+
+            .search-input {
+                width: 150px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .dark-toggle {
+                top: 10px;
+                left: 15px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .slide-counter {
+                top: 10px;
+                right: 15px;
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+
+            .session-badge {
+                font-size: 0.8rem;
+                padding: 6px 15px;
+            }
+
+            .shortcuts-help {
+                bottom: 10px;
+                right: 10px;
+                font-size: 0.7rem;
+                padding: 8px 12px;
+            }
+
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .quiz-question {
+                font-size: 1rem;
+            }
+
+            .quiz-option {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+
+            .schema-diagram svg {
+                width: 100%;
+                height: auto;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 15px;
+                height: 98%;
+                width: 98%;
+            }
+            
+            .slide-title {
+                font-size: 1.5rem;
+            }
+
+            .slide-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+
+            .card-content {
+                font-size: 0.85rem;
+            }
+
+            .code-block {
+                font-size: 0.75rem;
+                padding: 15px 30px 10px 30px;
+            }
+
+            .bullet-list li {
+                padding: 6px 0;
+                font-size: 0.85rem;
+            }
+
+            .styled-table {
+                font-size: 0.75rem;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 6px;
+            }
+
+            .navigation {
+                bottom: 10px;
+                gap: 8px;
+            }
+
+            .nav-btn {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+
+            .search-container {
+                top: 5px;
+                right: 50px;
+            }
+
+            .search-input {
+                width: 120px;
+                font-size: 0.75rem;
+                padding: 5px 10px;
+            }
+
+            .dark-toggle {
+                top: 5px;
+                left: 10px;
+                padding: 5px 10px;
+                font-size: 0.75rem;
+            }
+
+            .slide-counter {
+                top: 5px;
+                right: 10px;
+                font-size: 0.75rem;
+                padding: 5px 8px;
+            }
+
+            .session-badge {
+                font-size: 0.75rem;
+                padding: 5px 12px;
+            }
+
+            .shortcuts-help {
+                bottom: 5px;
+                right: 5px;
+                font-size: 0.65rem;
+                padding: 6px 10px;
+            }
+
+            .quiz-container {
+                padding: 15px;
+            }
+
+            .quiz-question {
+                font-size: 0.9rem;
+            }
+
+            .quiz-option {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
+
+            .schema-diagram svg {
+                max-width: 300px;
             }
         }
         
@@ -505,6 +716,8 @@
             z-index: 2;
             opacity: 0.8;
             transition: opacity 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         .copy-btn.copied {
             background: #27ae60;
@@ -1900,6 +2113,7 @@ GROUP BY customer_id;</div>
 
     </div> <!-- End presentation-container -->
     <button class="dark-toggle" id="darkToggle">🌙 Dark Mode</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-sql.min.js"></script>
     <script>
     // Enhanced navigation and functionality
@@ -1923,7 +2137,9 @@ GROUP BY customer_id;</div>
         
         // Apply syntax highlighting to code blocks
         setTimeout(() => {
-            Prism.highlightAll();
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAll();
+            }
         }, 100);
     }
 
@@ -1955,6 +2171,48 @@ GROUP BY customer_id;</div>
             searchInput.focus();
         }
     });
+
+    // Touch navigation for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next slide
+                if (currentSlide < slides.length - 1) {
+                    nextBtn.click();
+                }
+            } else {
+                // Swipe right - previous slide
+                if (currentSlide > 0) {
+                    prevBtn.click();
+                }
+            }
+        }
+    }
+
+    // Mobile-specific optimizations
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    // Adjust search results for mobile
+    if (isMobile()) {
+        searchResults.style.maxHeight = '200px';
+    }
 
     // Search functionality
     searchInput.addEventListener('input', (e) => {
@@ -2011,7 +2269,28 @@ GROUP BY customer_id;</div>
         btn.textContent = 'Copy';
         btn.onclick = function() {
             const code = block.innerText;
-            navigator.clipboard.writeText(code);
+            
+            // Mobile-friendly copy with fallback
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(code);
+            } else {
+                // Fallback for older browsers or non-secure contexts
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                } catch (err) {
+                    console.error('Copy failed:', err);
+                }
+                document.body.removeChild(textArea);
+            }
+            
             btn.textContent = 'Copied!';
             btn.classList.add('copied');
             setTimeout(() => {
