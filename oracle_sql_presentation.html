@@ -1355,33 +1355,147 @@ COMMIT;</div>
             <div class="slide-counter">18 / 43</div>
             <div class="slide-header">
                 <h1 class="slide-title">HR Schema ER Diagram</h1>
-                <p class="slide-subtitle">Visualizing Table Relationships</p>
+                <p class="slide-subtitle">Complete Database Structure & Relationships</p>
             </div>
+            
+            <!-- Enhanced ER Diagram -->
             <div class="schema-diagram">
-                <svg width="500" height="260" viewBox="0 0 500 260">
-                    <rect x="30" y="30" width="120" height="60" rx="10" fill="#667eea"/>
-                    <text x="90" y="55" fill="white" font-size="16" text-anchor="middle">EMPLOYEES</text>
-                    <text x="90" y="75" fill="white" font-size="12" text-anchor="middle">employee_id (PK)</text>
-                    <rect x="200" y="30" width="120" height="60" rx="10" fill="#764ba2"/>
-                    <text x="260" y="55" fill="white" font-size="16" text-anchor="middle">DEPARTMENTS</text>
-                    <text x="260" y="75" fill="white" font-size="12" text-anchor="middle">department_id (PK)</text>
-                    <rect x="370" y="30" width="100" height="60" rx="10" fill="#feca57"/>
-                    <text x="420" y="55" fill="#2c3e50" font-size="16" text-anchor="middle">JOBS</text>
-                    <text x="420" y="75" fill="#2c3e50" font-size="12" text-anchor="middle">job_id (PK)</text>
-                    <rect x="200" y="150" width="120" height="60" rx="10" fill="#ff6b6b"/>
-                    <text x="260" y="175" fill="white" font-size="16" text-anchor="middle">LOCATIONS</text>
-                    <text x="260" y="195" fill="white" font-size="12" text-anchor="middle">location_id (PK)</text>
-                    <!-- Lines for relationships -->
-                    <line x1="150" y1="60" x2="200" y2="60" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
-                    <line x1="320" y1="60" x2="370" y2="60" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
-                    <line x1="260" y1="90" x2="260" y2="150" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                <svg width="900" height="450" viewBox="0 0 900 450">
+                    <!-- EMPLOYEES Table -->
+                    <rect x="50" y="50" width="160" height="140" rx="8" fill="#667eea" stroke="#2c3e50" stroke-width="2"/>
+                    <text x="130" y="75" fill="white" font-size="16" font-weight="bold" text-anchor="middle">EMPLOYEES</text>
+                    <text x="130" y="95" fill="white" font-size="9" text-anchor="middle">employee_id (PK)</text>
+                    <text x="130" y="110" fill="white" font-size="9" text-anchor="middle">first_name, last_name</text>
+                    <text x="130" y="125" fill="white" font-size="9" text-anchor="middle">email, phone_number</text>
+                    <text x="130" y="140" fill="white" font-size="9" text-anchor="middle">hire_date, salary</text>
+                    <text x="130" y="155" fill="white" font-size="9" text-anchor="middle">department_id (FK)</text>
+                    <text x="130" y="170" fill="white" font-size="9" text-anchor="middle">manager_id (FK)</text>
+
+                    <!-- DEPARTMENTS Table -->
+                    <rect x="270" y="50" width="160" height="120" rx="8" fill="#764ba2" stroke="#2c3e50" stroke-width="2"/>
+                    <text x="350" y="75" fill="white" font-size="16" font-weight="bold" text-anchor="middle">DEPARTMENTS</text>
+                    <text x="350" y="95" fill="white" font-size="9" text-anchor="middle">department_id (PK)</text>
+                    <text x="350" y="110" fill="white" font-size="9" text-anchor="middle">department_name</text>
+                    <text x="350" y="125" fill="white" font-size="9" text-anchor="middle">manager_id (FK)</text>
+                    <text x="350" y="140" fill="white" font-size="9" text-anchor="middle">location_id (FK)</text>
+
+                    <!-- JOBS Table -->
+                    <rect x="490" y="50" width="140" height="100" rx="8" fill="#feca57" stroke="#2c3e50" stroke-width="2"/>
+                    <text x="560" y="75" fill="#2c3e50" font-size="16" font-weight="bold" text-anchor="middle">JOBS</text>
+                    <text x="560" y="95" fill="#2c3e50" font-size="9" text-anchor="middle">job_id (PK)</text>
+                    <text x="560" y="110" fill="#2c3e50" font-size="9" text-anchor="middle">job_title</text>
+                    <text x="560" y="125" fill="#2c3e50" font-size="9" text-anchor="middle">min_salary, max_salary</text>
+
+                    <!-- LOCATIONS Table -->
+                    <rect x="690" y="50" width="160" height="120" rx="8" fill="#ff6b6b" stroke="#2c3e50" stroke-width="2"/>
+                    <text x="770" y="75" fill="white" font-size="16" font-weight="bold" text-anchor="middle">LOCATIONS</text>
+                    <text x="770" y="95" fill="white" font-size="9" text-anchor="middle">location_id (PK)</text>
+                    <text x="770" y="110" fill="white" font-size="9" text-anchor="middle">street_address</text>
+                    <text x="770" y="125" fill="white" font-size="9" text-anchor="middle">city, state_province</text>
+                    <text x="770" y="140" fill="white" font-size="9" text-anchor="middle">country_id (FK)</text>
+
+                    <!-- COUNTRIES Table -->
+                    <rect x="690" y="220" width="160" height="80" rx="8" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+                    <text x="770" y="245" fill="white" font-size="16" font-weight="bold" text-anchor="middle">COUNTRIES</text>
+                    <text x="770" y="265" fill="white" font-size="9" text-anchor="middle">country_id (PK)</text>
+                    <text x="770" y="280" fill="white" font-size="9" text-anchor="middle">country_name, region_id</text>
+
+                    <!-- REGIONS Table -->
+                    <rect x="490" y="220" width="140" height="80" rx="8" fill="#e67e22" stroke="#2c3e50" stroke-width="2"/>
+                    <text x="560" y="245" fill="white" font-size="16" font-weight="bold" text-anchor="middle">REGIONS</text>
+                    <text x="560" y="265" fill="white" font-size="9" text-anchor="middle">region_id (PK)</text>
+                    <text x="560" y="280" fill="white" font-size="9" text-anchor="middle">region_name</text>
+
+                    <!-- JOB_HISTORY Table -->
+                    <rect x="50" y="220" width="160" height="100" rx="8" fill="#9b59b6" stroke="#2c3e50" stroke-width="2"/>
+                    <text x="130" y="245" fill="white" font-size="16" font-weight="bold" text-anchor="middle">JOB_HISTORY</text>
+                    <text x="130" y="265" fill="white" font-size="9" text-anchor="middle">employee_id (FK)</text>
+                    <text x="130" y="280" fill="white" font-size="9" text-anchor="middle">job_id (FK)</text>
+                    <text x="130" y="295" fill="white" font-size="9" text-anchor="middle">start_date, end_date</text>
+
+                    <!-- Relationship Lines -->
+                    <!-- EMPLOYEES → DEPARTMENTS -->
+                    <line x1="210" y1="120" x2="270" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="240" y="115" fill="#333" font-size="9" text-anchor="middle">department_id</text>
+                    
+                    <!-- EMPLOYEES → EMPLOYEES (self-reference for manager) -->
+                    <line x1="50" y1="120" x2="130" y2="50" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="90" y="85" fill="#333" font-size="9" text-anchor="middle">manager_id</text>
+                    
+                    <!-- DEPARTMENTS → JOBS -->
+                    <line x1="430" y1="120" x2="490" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="460" y="115" fill="#333" font-size="9" text-anchor="middle">job_id</text>
+                    
+                    <!-- DEPARTMENTS → LOCATIONS -->
+                    <line x1="350" y1="170" x2="690" y2="170" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="520" y="165" fill="#333" font-size="9" text-anchor="middle">location_id</text>
+                    
+                    <!-- LOCATIONS → COUNTRIES -->
+                    <line x1="770" y1="170" x2="770" y2="220" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="780" y="195" fill="#333" font-size="9" text-anchor="middle">country_id</text>
+                    
+                    <!-- COUNTRIES → REGIONS -->
+                    <line x1="690" y1="260" x2="630" y2="260" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="660" y="255" fill="#333" font-size="9" text-anchor="middle">region_id</text>
+                    
+                    <!-- JOB_HISTORY → EMPLOYEES -->
+                    <line x1="210" y1="270" x2="130" y2="190" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="170" y="230" fill="#333" font-size="9" text-anchor="middle">employee_id</text>
+                    
+                    <!-- JOB_HISTORY → JOBS -->
+                    <line x1="210" y1="290" x2="560" y2="150" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="385" y="220" fill="#333" font-size="9" text-anchor="middle">job_id</text>
+
+                    <!-- Arrow marker definition -->
                     <defs>
                         <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
                             <path d="M0,0 L10,5 L0,10" fill="#333" />
                         </marker>
                     </defs>
                 </svg>
-                <div style="margin-top:10px; color:#667eea; font-size:0.95em;">Arrows show foreign key relationships (EMPLOYEES → DEPARTMENTS → LOCATIONS, DEPARTMENTS → JOBS)</div>
+            </div>
+
+            <!-- Detailed Relationship Information -->
+            <div class="content-grid" style="margin-top: 20px;">
+                <div class="content-card">
+                    <h3 class="card-title">Key Relationships</h3>
+                    <div class="card-content">
+                        <ul class="bullet-list">
+                            <li><strong>EMPLOYEES → DEPARTMENTS:</strong> Each employee belongs to one department</li>
+                            <li><strong>EMPLOYEES → EMPLOYEES:</strong> Self-reference for manager hierarchy</li>
+                            <li><strong>DEPARTMENTS → LOCATIONS:</strong> Each department has one location</li>
+                            <li><strong>LOCATIONS → COUNTRIES:</strong> Each location is in one country</li>
+                            <li><strong>COUNTRIES → REGIONS:</strong> Each country belongs to one region</li>
+                            <li><strong>JOB_HISTORY:</strong> Tracks employee job changes over time</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Data Types & Constraints</h3>
+                    <div class="card-content">
+                        <ul class="bullet-list">
+                            <li><strong>Primary Keys:</strong> employee_id, department_id, job_id, location_id, country_id, region_id</li>
+                            <li><strong>Foreign Keys:</strong> department_id, manager_id, location_id, country_id, region_id</li>
+                            <li><strong>Unique Constraints:</strong> email, phone_number</li>
+                            <li><strong>Check Constraints:</strong> salary > 0, hire_date validation</li>
+                            <li><strong>NOT NULL:</strong> employee_id, first_name, last_name, hire_date</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card full-width">
+                <h3 class="card-title">Sample Data Insights</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li><strong>~107 employees</strong> across multiple departments</li>
+                        <li><strong>27 departments</strong> in various locations worldwide</li>
+                        <li><strong>19 job titles</strong> with different salary ranges</li>
+                        <li><strong>23 locations</strong> in 14 countries across 4 regions</li>
+                        <li><strong>Hierarchical structure:</strong> Employees can manage other employees</li>
+                        <li><strong>Historical tracking:</strong> Job history maintains employment records</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
