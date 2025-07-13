@@ -1,6 +1,6 @@
-# Oracle SQL Training with HR Schema
+# Oracle SQL & Oracle APEX Training with HR Schema
 
-📘 Interactive Oracle SQL training slides and labs designed for beginners and intermediate learners. Built using the Oracle HR schema, this resource walks through real-world SQL examples with explanations, diagrams, and hands-on practice.
+📘 Interactive Oracle SQL and Oracle APEX training slides and labs designed for beginners and intermediate learners. Built using the Oracle HR schema, this resource walks through real-world SQL and APEX examples with explanations, diagrams, and hands-on practice.
 
 ---
 
@@ -67,7 +67,7 @@
 - [Oracle SQL Presentation (HTML)](https://mostafaashrysopc.github.io/oracle-sql-training/oracle_sql_presentation.html)
 - [Oracle APEX Presentation (HTML)](https://mostafaashrysopc.github.io/oracle-sql-training/oracle_apex_presentation.html)
 
-> **Tip:** For best experience, download and open the HTML files in your browser, or use the "Raw" button on GitHub and save as `.html`.
+> **Tip:** For the best experience, use the above GitHub Pages links to open the presentations directly in your browser—no download needed!
 
 ### **Navigation**
 - **Arrow Keys**: Navigate between slides
