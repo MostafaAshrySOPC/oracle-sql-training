@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Oracle APEX Training</title>
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 60px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 60px;
+            display: none;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .slide-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+
+        .session-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .content-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .card-content {
+            color: #5a6c7d;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 28px 60px 20px 60px; /* top, right, bottom, left */
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "SQL";
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        /* Enhanced code block styling */
+        .code-block {
+            position: relative;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 28px 60px 20px 60px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+
+        .code-block.highlighted {
+            background: #1e2a3a;
+            border-left-color: #feca57;
+        }
+
+        /* Search functionality */
+        .search-container {
+            position: fixed;
+            top: 10px;
+            right: 100px;
+            z-index: 1000;
+        }
+
+        .search-input {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.9);
+            font-size: 0.9rem;
+            width: 200px;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-result-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-result-item:hover {
+            background: #f5f5f5;
+        }
+
+        /* Quiz styles */
+        .quiz-container {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .quiz-option.selected {
+            background: #feca57;
+            color: #2c3e50;
+        }
+
+        .quiz-option.correct {
+            background: #27ae60;
+        }
+
+        .quiz-option.incorrect {
+            background: #e74c3c;
+        }
+
+        /* Print styles */
+        @media print {
+            .navigation, .dark-toggle, .search-container {
+                display: none !important;
+            }
+            .slide {
+                display: block !important;
+                page-break-after: always;
+            }
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Keyboard shortcuts display */
+        .shortcuts-help {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .shortcuts-help.show {
+            opacity: 1;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .bullet-list li {
+            padding: 10px 0;
+            border-left: 3px solid #667eea;
+            padding-left: 20px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .nav-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #667eea;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .styled-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .styled-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .styled-table tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .schema-diagram {
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* --- Ensure dark mode button is visible and styled --- */
+        .dark-toggle {
+            position: fixed;
+            top: 10px;
+            left: 30px;
+            z-index: 1000;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #667eea;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            z-index: 1002;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .learning-objectives h3 {
+            margin-bottom: 15px;
+        }
+
+        .learning-objectives ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .learning-objectives li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #a8edea;
+            font-weight: bold;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .presentation-container {
+                padding-top: 80px;
+            }
+            
+            .slide {
+                padding: 20px;
+                height: 95%;
+                width: 95%;
+            }
+
+            .slide-header {
+                margin-top: 0;
+                margin-bottom: 30px;
+            }
+            
+            .slide-title {
+                font-size: 1.8rem;
+            }
+
+            .slide-subtitle {
+                font-size: 1rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .card-content {
+                font-size: 0.9rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 20px 40px 15px 40px;
+                overflow-x: auto;
+            }
+
+            .bullet-list li {
+                padding: 8px 0;
+                font-size: 0.9rem;
+            }
+
+            .styled-table {
+                font-size: 0.8rem;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 8px;
+            }
+
+            .navigation {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .search-container {
+                top: 5px;
+                right: 50px;
+                z-index: 1001;
+            }
+
+            .search-input {
+                width: 140px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .dark-toggle {
+                top: 5px;
+                left: 10px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                z-index: 1001;
+            }
+
+            .slide-counter {
+                top: 10px;
+                right: 15px;
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+
+            .session-badge {
+                font-size: 0.8rem;
+                padding: 6px 15px;
+            }
+
+            .shortcuts-help {
+                bottom: 10px;
+                right: 10px;
+                font-size: 0.7rem;
+                padding: 8px 12px;
+            }
+
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .quiz-question {
+                font-size: 1rem;
+            }
+
+            .quiz-option {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+
+            .schema-diagram svg {
+                width: 100%;
+                height: auto;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .presentation-container {
+                padding-top: 70px;
+            }
+            
+            .slide {
+                padding: 15px;
+                height: 98%;
+                width: 98%;
+            }
+
+            .slide-header {
+                margin-top: 0;
+                margin-bottom: 25px;
+            }
+            
+            .slide-title {
+                font-size: 1.5rem;
+            }
+
+            .slide-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+
+            .card-content {
+                font-size: 0.85rem;
+            }
+
+            .code-block {
+                font-size: 0.75rem;
+                padding: 15px 30px 10px 30px;
+            }
+
+            .bullet-list li {
+                padding: 6px 0;
+                font-size: 0.85rem;
+            }
+
+            .styled-table {
+                font-size: 0.75rem;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 6px;
+            }
+
+            .navigation {
+                bottom: 10px;
+                gap: 8px;
+            }
+
+            .nav-btn {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+
+            .search-container {
+                top: 2px;
+                right: 45px;
+                z-index: 1001;
+            }
+
+            .search-input {
+                width: 110px;
+                font-size: 0.75rem;
+                padding: 5px 10px;
+            }
+
+            .dark-toggle {
+                top: 2px;
+                left: 8px;
+                padding: 5px 10px;
+                font-size: 0.75rem;
+                z-index: 1001;
+            }
+
+            .slide-counter {
+                top: 5px;
+                right: 10px;
+                font-size: 0.75rem;
+                padding: 5px 8px;
+            }
+
+            .session-badge {
+                font-size: 0.75rem;
+                padding: 5px 12px;
+            }
+
+            .shortcuts-help {
+                bottom: 5px;
+                right: 5px;
+                font-size: 0.65rem;
+                padding: 6px 10px;
+            }
+
+            .quiz-container {
+                padding: 15px;
+            }
+
+            .quiz-question {
+                font-size: 0.9rem;
+            }
+
+            .quiz-option {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
+
+            .schema-diagram svg {
+                max-width: 300px;
+            }
+        }
+        
+        /* Dark mode variables */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --slide-bg: white;
+            --text-color: #333;
+            --card-bg: #f8f9fa;
+            --highlight-bg: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            --code-bg: #2c3e50;
+            --code-color: #ecf0f1;
+        }
+        body.dark-mode {
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --slide-bg: #0f0f23;
+            --text-color: #ffffff;
+            --card-bg: #1a1a2e;
+            --highlight-bg: linear-gradient(120deg, #667eea 0%, #764ba2 100%);
+            --code-bg: #1e1e1e;
+            --code-color: #d4d4d4;
+        }
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-color);
+        }
+        .slide {
+            background: var(--slide-bg);
+        }
+        .content-card, .bullet-list li, .schema-diagram {
+            background: var(--card-bg);
+        }
+        .highlight {
+            background: var(--highlight-bg);
+        }
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-color);
+        }
+        body.dark-mode .slide-title {
+            color: #ffffff;
+        }
+        body.dark-mode .slide-subtitle {
+            color: #b0b0b0;
+        }
+        body.dark-mode .card-title {
+            color: #ffffff;
+        }
+        body.dark-mode .card-content {
+            color: #e0e0e0;
+        }
+        body.dark-mode .bullet-list li {
+            color: #e0e0e0;
+            border-left-color: #667eea;
+        }
+        body.dark-mode .styled-table th {
+            background: #667eea;
+            color: white;
+        }
+        body.dark-mode .styled-table td {
+            color: #e0e0e0;
+            border-bottom-color: #444;
+        }
+        body.dark-mode .styled-table tbody tr:hover {
+            background: #2a2a3e;
+        }
+        body.dark-mode .search-input {
+            background: rgba(255,255,255,0.1);
+            color: #ffffff;
+            border: 1px solid #444;
+        }
+        body.dark-mode .search-input::placeholder {
+            color: #b0b0b0;
+        }
+        body.dark-mode .search-results {
+            background: #1a1a2e;
+            border: 1px solid #444;
+        }
+        body.dark-mode .search-result-item {
+            color: #e0e0e0;
+            border-bottom-color: #444;
+        }
+        body.dark-mode .search-result-item:hover {
+            background: #2a2a3e;
+        }
+        body.dark-mode .nav-btn {
+            background: #667eea;
+            color: white;
+        }
+        body.dark-mode .nav-btn:hover {
+            background: #5a6fd8;
+        }
+        body.dark-mode .nav-btn:disabled {
+            background: #444;
+            color: #888;
+        }
+        body.dark-mode .slide-counter {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+        body.dark-mode .session-badge {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        body.dark-mode .quiz-container {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        body.dark-mode .quiz-option {
+            background: rgba(255,255,255,0.1);
+            color: #ffffff;
+        }
+        body.dark-mode .quiz-option:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        body.dark-mode .quiz-option.selected {
+            background: #feca57;
+            color: #2c3e50;
+        }
+        body.dark-mode .quiz-option.correct {
+            background: #27ae60;
+            color: white;
+        }
+        body.dark-mode .quiz-option.incorrect {
+            background: #e74c3c;
+            color: white;
+        }
+        .progress-bar {
+            background: #feca57;
+            box-shadow: 0 2px 4px rgba(254, 202, 87, 0.5);
+        }
+        body.dark-mode .progress-bar {
+            background: #feca57;
+            box-shadow: 0 2px 4px rgba(254, 202, 87, 0.7);
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Search functionality -->
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search topics..." id="searchInput">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+    <!-- Keyboard shortcuts help -->
+    <div class="shortcuts-help" id="shortcutsHelp">
+        <strong>Keyboard Shortcuts:</strong><br>
+        ← → Navigate | Ctrl+F Search | ? Help
+    </div>
+    <button class="dark-toggle" id="darkToggle">🌙 Dark Mode</button>
+    <div class="presentation-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <!-- Slide 1: What is Oracle APEX? -->
+        <div class="slide active">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">What is Oracle APEX?</h1>
+                <p class="slide-subtitle">A Rapid Web Application Development Tool</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Definition & Overview</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Oracle Application Express (APEX) is a free, low-code development platform for building scalable, secure web apps on Oracle Database.</li>
+                        <li>Formerly known as HTML DB, Flows, Project Marvel, and Oracle Platform.</li>
+                        <li>Developed by Oracle, available by default in all Oracle DB installations.</li>
+                        <li>Enables rapid development using only a web browser and minimal programming experience.</li>
+                        <li>APEX is written in PL/SQL and runs entirely within the Oracle Database.</li>
+                        <li>Reference: <a href="https://www.geeksforgeeks.org/html/introduction-to-oracle-apex/" target="_blank">GeeksforGeeks</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 2: History and Evolution -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">History and Evolution</h1>
+                <p class="slide-subtitle">From HTML DB to APEX</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Timeline</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>2000: Project Marvel (internal Oracle project)</li>
+                        <li>2004: Released as HTML DB</li>
+                        <li>2006: Renamed to Oracle Application Express (APEX)</li>
+                        <li>Continuous enhancements: new features, UI improvements, REST support, and more</li>
+                        <li>Reference: <a href="https://www.geeksforgeeks.org/html/introduction-to-oracle-apex/" target="_blank">GeeksforGeeks</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 3: Key Features -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Key Features of Oracle APEX</h1>
+                <p class="slide-subtitle">Why Use APEX?</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Highlights</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Build web applications quickly and securely</li>
+                        <li>Completely free, no license required</li>
+                        <li>Runs inside Oracle Database, no separate server needed</li>
+                        <li>Highly customizable UI and extensible with HTML, CSS, JavaScript</li>
+                        <li>Scalable for high-volume users</li>
+                        <li>Easy deployment: export/import apps between environments</li>
+                        <li>Reference: <a href="https://www.geeksforgeeks.org/html/introduction-to-oracle-apex/" target="_blank">GeeksforGeeks</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 4: APEX Architecture -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">APEX Architecture</h1>
+                <p class="slide-subtitle">How Does APEX Work?</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Components</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Web browser (user interface)</li>
+                        <li>Oracle REST Data Services (ORDS) or Embedded PL/SQL Gateway (web listener)</li>
+                        <li>APEX Engine (PL/SQL packages inside Oracle DB)</li>
+                        <li>Oracle Database (data storage and metadata)</li>
+                        <li>Reference: <a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 5: Setting Up APEX -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Setting Up Oracle APEX</h1>
+                <p class="slide-subtitle">Workspace and Environment</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Getting Started</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>APEX is included with all Oracle Database installations</li>
+                        <li>Request a workspace on <a href="https://apex.oracle.com/" target="_blank">apex.oracle.com</a> or use your own Oracle DB</li>
+                        <li>After email confirmation, activate your workspace</li>
+                        <li>Log in to the workspace to start building apps</li>
+                        <li>Reference: <a href="https://www.geeksforgeeks.org/html/introduction-to-oracle-apex/" target="_blank">GeeksforGeeks</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 6: APEX IDE Overview -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">APEX IDE Overview</h1>
+                <p class="slide-subtitle">Main Areas of the Interface</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Key Sections</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>App Builder: Create and manage applications</li>
+                        <li>SQL Workshop: Run SQL, manage database objects</li>
+                        <li>Team Development: Track tasks, bugs, features</li>
+                        <li>Packaged Apps: Ready-to-use sample applications</li>
+                        <li>Reference: <a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 7: Step-by-Step: Creating Your First App -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Step-by-Step: Creating Your First App</h1>
+                <p class="slide-subtitle">From Workspace to Application</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">App Creation Process</h3>
+                <div class="card-content">
+                    <ol class="bullet-list">
+                        <li>Log in to your APEX workspace</li>
+                        <li>Click <b>App Builder</b> &rarr; <b>Create</b></li>
+                        <li>Select <b>New Application</b></li>
+                        <li>Enter app name and description</li>
+                        <li>Add pages (forms, reports, charts, dashboards, etc.)</li>
+                        <li>Configure navigation, authentication, and appearance</li>
+                        <li>Click <b>Create Application</b></li>
+                        <li>Run the app and explore its features</li>
+                        <li>Reference: <a href="https://www.geeksforgeeks.org/html/introduction-to-oracle-apex/" target="_blank">GeeksforGeeks</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 8: Adding Pages and Components -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Adding Pages and Components</h1>
+                <p class="slide-subtitle">Forms, Reports, Charts, and More</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Page Types</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li><b>Forms:</b> Data entry, CRUD operations</li>
+                        <li><b>Reports:</b> Interactive, classic, faceted search</li>
+                        <li><b>Charts:</b> Bar, line, pie, donut, and more</li>
+                        <li><b>Dashboards:</b> Combine multiple visualizations</li>
+                        <li><b>Calendars, Maps, Wizards, and more</b></li>
+                        <li>Reference: <a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 9: Customizing Your App -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Customizing Your App</h1>
+                <p class="slide-subtitle">Themes, Navigation, and UI</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Personalization Options</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Choose from built-in themes or create your own</li>
+                        <li>Customize navigation menus, icons, and layout</li>
+                        <li>Add custom HTML, CSS, and JavaScript for advanced UI</li>
+                        <li>Reference: <a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 10: SQL Workshop and Data Management -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">SQL Workshop and Data Management</h1>
+                <p class="slide-subtitle">Working with Data</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Key Tools</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Object Browser: View and manage tables, views, indexes</li>
+                        <li>SQL Commands: Run ad-hoc SQL statements</li>
+                        <li>SQL Scripts: Save and execute scripts</li>
+                        <li>Utilities: Data loading, exporting, RESTful services</li>
+                        <li>Reference: <a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 11: Dynamic Actions and Validations -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Dynamic Actions and Validations</h1>
+                <p class="slide-subtitle">Making Apps Interactive</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Automation and Data Integrity</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Dynamic Actions: Trigger logic based on user events (click, change, etc.)</li>
+                        <li>Show/hide, enable/disable, set values, execute code</li>
+                        <li>Validations: Declarative, PL/SQL, client-side, and server-side</li>
+                        <li>Prevent invalid data entry and automate workflows</li>
+                        <li>Reference: <a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 12: Security and Authentication -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Security and Authentication</h1>
+                <p class="slide-subtitle">Protecting Your Apps</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Built-in Security Features</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Authentication: APEX, LDAP, SSO, OAuth2</li>
+                        <li>Authorization: Role-based access control</li>
+                        <li>Session state protection, data encryption</li>
+                        <li>Automatic protection against SQL injection and XSS</li>
+                        <li>Reference: <a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 13: Deploying and Exporting Apps -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Deploying and Exporting Apps</h1>
+                <p class="slide-subtitle">Moving Apps Between Environments</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Deployment Process</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Export apps as SQL scripts or ZIP files</li>
+                        <li>Import into other APEX environments</li>
+                        <li>Version control and team development support</li>
+                        <li>Reference: <a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 14: Best Practices and Tips -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Best Practices and Tips</h1>
+                <p class="slide-subtitle">Building Great APEX Apps</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Recommendations</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li>Use wizards for rapid prototyping</li>
+                        <li>Leverage built-in security features</li>
+                        <li>Keep UI simple and intuitive</li>
+                        <li>Test thoroughly in all environments</li>
+                        <li>Stay updated with APEX releases</li>
+                        <li>Reference: <a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 15: Resources and Further Learning -->
+        <div class="slide">
+            <div class="slide-counter"></div>
+            <div class="slide-header">
+                <h1 class="slide-title">Resources and Further Learning</h1>
+                <p class="slide-subtitle">Where to Go Next</p>
+            </div>
+            <div class="content-card full-width">
+                <h3 class="card-title">Links</h3>
+                <div class="card-content">
+                    <ul class="bullet-list">
+                        <li><a href="https://apex.oracle.com/en/" target="_blank">Oracle APEX Official Site</a></li>
+                        <li><a href="https://apex.oracle.com/learn/" target="_blank">APEX Learning Resources</a></li>
+                        <li><a href="https://apex.world/" target="_blank">APEX Community</a></li>
+                        <li><a href="https://docs.oracle.com/en/database/oracle/application-express/index.html" target="_blank">APEX Documentation</a></li>
+                        <li><a href="https://www.geeksforgeeks.org/html/introduction-to-oracle-apex/" target="_blank">GeeksforGeeks: Introduction to Oracle APEX</a></li>
+                        <li><a href="https://pretius.com/blog/oracle-apex-tutorial/" target="_blank">Pretius: Oracle APEX Tutorial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Navigation Buttons -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn">Previous</button>
+            <button class="nav-btn" id="nextBtn">Next</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-sql.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const shortcutsHelp = document.getElementById('shortcutsHelp');
+            const darkToggle = document.getElementById('darkToggle');
+            const progressBar = document.getElementById('progressBar');
+
+            let currentSlideIndex = 0;
+            let searchTimeout;
+
+            function updateProgress() {
+                const progress = ((currentSlideIndex + 1) / slides.length) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            function updateSlideCounter() {
+                slides.forEach((slide, i) => {
+                    const counter = slide.querySelector('.slide-counter');
+                    if (counter) {
+                        counter.textContent = `${i + 1} / ${slides.length}`;
+                    }
+                });
+            }
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
+                updateProgress();
+                updateSlideCounter();
+                currentSlideIndex = index;
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === slides.length - 1;
+                shortcutsHelp.style.display = 'block';
+            }
+
+            function search() {
+                const query = searchInput.value.toLowerCase();
+                searchResults.innerHTML = '';
+                let found = false;
+                slides.forEach(slide => {
+                    const slideContent = slide.textContent.toLowerCase();
+                    if (slideContent.includes(query)) {
+                        const resultItem = document.createElement('div');
+                        resultItem.textContent = slide.querySelector('.slide-title').textContent;
+                        resultItem.classList.add('search-result-item');
+                        resultItem.addEventListener('click', () => {
+                            const slideIndex = Array.from(slides).indexOf(slide);
+                            showSlide(slideIndex);
+                            searchInput.value = '';
+                            searchResults.innerHTML = '';
+                        });
+                        searchResults.appendChild(resultItem);
+                        found = true;
+                    }
+                });
+                if (!found) {
+                    searchResults.innerHTML = '<div>No results found.</div>';
+                }
+            }
+
+            function handleKeyPress(event) {
+                if (event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    showSlide(currentSlideIndex - 1);
+                } else if (event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    showSlide(currentSlideIndex + 1);
+                } else if (event.key === 'F') {
+                    event.preventDefault();
+                    search();
+                } else if (event.key === '?') {
+                    event.preventDefault();
+                    shortcutsHelp.style.display = shortcutsHelp.style.display === 'block' ? 'none' : 'block';
+                }
+            }
+
+            // Dark mode toggle (match SQL presentation logic)
+            darkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                darkToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+            });
+
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(search, 300);
+            });
+
+            searchInput.addEventListener('blur', () => {
+                clearTimeout(searchTimeout);
+                searchResults.innerHTML = '';
+            });
+
+            prevBtn.addEventListener('click', () => {
+                showSlide(currentSlideIndex - 1);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                showSlide(currentSlideIndex + 1);
+            });
+
+            document.addEventListener('keydown', handleKeyPress);
+
+            // Add slide counters dynamically
+            slides.forEach(slide => {
+                if (!slide.querySelector('.slide-counter')) {
+                    const counter = document.createElement('div');
+                    counter.className = 'slide-counter';
+                    slide.insertBefore(counter, slide.firstChild);
+                }
+            });
+
+            // Initial call to show the first slide
+            showSlide(0);
+        });
+    </script>
+    <script>
+    // Quiz functionality (match SQL presentation)
+    document.querySelectorAll('.quiz-option').forEach(option => {
+        option.addEventListener('click', function() {
+            const isCorrect = this.getAttribute('data-correct') === 'true';
+            const options = this.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if (opt.getAttribute('data-correct') === 'true') {
+                    opt.classList.add('correct');
+                } else if (opt === this && !isCorrect) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            // Show feedback
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                    opt.style.pointerEvents = 'auto';
+                });
+            }, 3000);
+        });
+    });
+    </script>
+</body>
+</html> 

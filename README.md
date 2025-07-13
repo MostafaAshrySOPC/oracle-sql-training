@@ -26,7 +26,8 @@
 ## 📂 Project Structure
 
 ```
-├── oracle_sql_presentation.html       # Enhanced interactive training slides
+├── [oracle_sql_presentation.html](./oracle_sql_presentation.html)       # Enhanced interactive Oracle SQL training slides
+├── [oracle_apex_presentation.html](./oracle_apex_presentation.html)     # Interactive Oracle APEX training slides (NEW)
 ├── README.md                          # Project overview and instructions
 ```
 
@@ -61,6 +62,12 @@
 ---
 
 ## ▶️ How to Use
+
+### **Open Presentations Directly on GitHub**
+- [Oracle SQL Presentation (HTML)](https://mostafaashrysopc.github.io/oracle-sql-training/oracle_sql_presentation.html)
+- [Oracle APEX Presentation (HTML)](https://mostafaashrysopc.github.io/oracle-sql-training/oracle_apex_presentation.html)
+
+> **Tip:** For best experience, download and open the HTML files in your browser, or use the "Raw" button on GitHub and save as `.html`.
 
 ### **Navigation**
 - **Arrow Keys**: Navigate between slides
