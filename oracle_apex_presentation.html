@@ -1391,6 +1391,10 @@
             function search() {
                 const query = searchInput.value.toLowerCase();
                 searchResults.innerHTML = '';
+                if (query.length < 2) {
+                    searchResults.style.display = 'none';
+                    return;
+                }
                 let found = false;
                 slides.forEach(slide => {
                     const slideContent = slide.textContent.toLowerCase();
@@ -1403,36 +1407,43 @@
                             showSlide(slideIndex);
                             searchInput.value = '';
                             searchResults.innerHTML = '';
+                            searchResults.style.display = 'none';
                         });
                         searchResults.appendChild(resultItem);
                         found = true;
                     }
                 });
-                if (!found) {
+                if (found) {
+                    searchResults.style.display = 'block';
+                } else {
                     searchResults.innerHTML = '<div>No results found.</div>';
+                    searchResults.style.display = 'block';
                 }
             }
 
-            function handleKeyPress(event) {
+            // Hide search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.search-container')) {
+                    searchResults.style.display = 'none';
+                }
+            });
+
+            // Improve keyboard shortcut: Ctrl+F focuses search
+            document.addEventListener('keydown', function(event) {
+                if (event.ctrlKey && event.key.toLowerCase() === 'f') {
+                    event.preventDefault();
+                    searchInput.focus();
+                }
                 if (event.key === 'ArrowLeft') {
                     event.preventDefault();
                     showSlide(currentSlideIndex - 1);
                 } else if (event.key === 'ArrowRight') {
                     event.preventDefault();
                     showSlide(currentSlideIndex + 1);
-                } else if (event.key === 'F') {
-                    event.preventDefault();
-                    search();
                 } else if (event.key === '?') {
                     event.preventDefault();
                     shortcutsHelp.style.display = shortcutsHelp.style.display === 'block' ? 'none' : 'block';
                 }
-            }
-
-            // Dark mode toggle (match SQL presentation logic)
-            darkToggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-                darkToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
             });
 
             searchInput.addEventListener('input', () => {
@@ -1440,9 +1451,16 @@
                 searchTimeout = setTimeout(search, 300);
             });
 
-            searchInput.addEventListener('blur', () => {
-                clearTimeout(searchTimeout);
-                searchResults.innerHTML = '';
+            // Remove blur event that hides results immediately
+            // searchInput.addEventListener('blur', () => {
+            //     clearTimeout(searchTimeout);
+            //     searchResults.innerHTML = '';
+            // });
+
+            // Dark mode toggle (match SQL presentation logic)
+            darkToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                darkToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
             });
 
             prevBtn.addEventListener('click', () => {
@@ -1452,8 +1470,6 @@
             nextBtn.addEventListener('click', () => {
                 showSlide(currentSlideIndex + 1);
             });
-
-            document.addEventListener('keydown', handleKeyPress);
 
             // Add slide counters dynamically
             slides.forEach(slide => {
