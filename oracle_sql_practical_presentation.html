@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Oracle SQL Practical</title>
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+        }
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 60px;
+        }
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        .slide img { max-width: 80%; max-height: 400px; margin-bottom: 30px; border-radius: 10px; }
+        .slide h1, .slide h2 { margin-bottom: 20px; }
+        .slide p { font-size: 1.2em; margin-bottom: 20px; }
+        .slide pre { width: 100%; }
+        .nav-btns {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+        .nav-btns button {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .nav-btns button:hover { background: #764ba2; }
+        
+        code.language-sql {
+            white-space: pre-line !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide" id="slide-1">
+            <h1>Oracle SQL Practical</h1>
+            <h2>Hands-on with Company Database Schema</h2>
+            <p>Learn how to create, run, and practice SQL using Oracle APEX.</p>
+        </div>
+        <!-- Slide 2: Schema Image -->
+        <div class="slide" id="slide-2" style="display:none;">
+            <h2>Company Database Schema</h2>
+            <div style="display: flex; gap: 24px; justify-content: center; align-items: flex-start; width: 100%;">
+                <img src="Company Database Schema1.png" alt="Company Database Schema Part 1" style="max-width:48%; max-height:600px; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+                <img src="Company Database Schema2.png" alt="Company Database Schema Part 2" style="max-width:48%; max-height:600px; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+            </div>
+            <p style="margin-top:24px;">This schema will be used for all practical exercises. Review the tables and relationships before starting.</p>
+        </div>
+        <!-- Slide 3: SQL Script Example -->
+        <div class="slide" id="slide-3" style="display:none;">
+            <h2>Creating the Schema</h2>
+            <p>Full SQL script to create tables:</p>
+            <pre>
+                <code class="language-sql">
+                    -- 1. DROP TABLES in reverse dependency order
+                    DROP TABLE works_on CASCADE CONSTRAINTS PURGE;
+                    DROP TABLE dependent CASCADE CONSTRAINTS PURGE;
+                    DROP TABLE dept_locations CASCADE CONSTRAINTS PURGE;
+                    DROP TABLE project CASCADE CONSTRAINTS PURGE;
+                    DROP TABLE employee CASCADE CONSTRAINTS PURGE;
+                    DROP TABLE department CASCADE CONSTRAINTS PURGE;
+
+                    -- 2. CREATE TABLES
+
+                    CREATE TABLE employee (
+                    fname VARCHAR2(20),
+                    minit CHAR(1),
+                    lname VARCHAR2(30),
+                    ssn NUMBER(9) PRIMARY KEY,
+                    bdate DATE,
+                    address VARCHAR2(100),
+                    gender CHAR(1),
+                    salary NUMBER(10,2),
+                    superssn NUMBER(9),
+                    dno NUMBER(3)
+                    );
+
+                    CREATE TABLE department (
+                    dname VARCHAR2(30),
+                    dnumber NUMBER(3) PRIMARY KEY,
+                    mgrssn NUMBER(9),
+                    mgrstartdate DATE
+                    );
+
+                    CREATE TABLE dept_locations (
+                    dnumber NUMBER(3),
+                    dlocation VARCHAR2(100),
+                    PRIMARY KEY (dnumber, dlocation)
+                    );
+
+                    CREATE TABLE project (
+                    pname VARCHAR2(40),
+                    pnumber NUMBER(5) PRIMARY KEY,
+                    plocation VARCHAR2(100),
+                    dnum NUMBER(3)
+                    );
+
+                    CREATE TABLE works_on (
+                    essn NUMBER(9),
+                    pno NUMBER(5),
+                    hours NUMBER(5,1),
+                    PRIMARY KEY (essn, pno)
+                    );
+
+                    CREATE TABLE dependent (
+                    essn NUMBER(9),
+                    dependent_name VARCHAR2(30),
+                    gender CHAR(1),
+                    bdate DATE,
+                    relationship VARCHAR2(15),
+                    PRIMARY KEY (essn, dependent_name)
+                    );
+
+                    -- 3. INSERT DATA from your image
+
+                    INSERT INTO department VALUES ('Research', 5, 333445555, TO_DATE('1988-05-22','YYYY-MM-DD'));
+                    INSERT INTO department VALUES ('Administration', 4, 987654321, TO_DATE('1995-01-01','YYYY-MM-DD'));
+                    INSERT INTO department VALUES ('Headquarters', 1, 888665555, TO_DATE('1981-06-19','YYYY-MM-DD'));
+
+                    INSERT INTO employee VALUES ('James','E','Borg',888665555,TO_DATE('1937-11-10','YYYY-MM-DD'),'450 Stone, Houston, TX','M',55000,NULL,1);
+                    INSERT INTO employee VALUES ('Franklin','T','Wong',333445555,TO_DATE('1955-12-08','YYYY-MM-DD'),'638 Voss, Houston, TX','M',40000,888665555,5);
+                    INSERT INTO employee VALUES ('Jennifer','S','Wallace',987654321,TO_DATE('1941-06-20','YYYY-MM-DD'),'291 Berry, Bellaire, TX','F',43000,888665555,4);
+                    INSERT INTO employee VALUES ('Alicia','J','Zelaya',999887777,TO_DATE('1968-07-19','YYYY-MM-DD'),'3321 Castle, Spring, TX','F',25000,987654321,4);
+                    INSERT INTO employee VALUES ('Ramesh','K','Narayan',666884444,TO_DATE('1962-09-15','YYYY-MM-DD'),'975 Fire Oak, Humble, TX','M',38000,333445555,5);
+                    INSERT INTO employee VALUES ('Joyce','A','English',453453453,TO_DATE('1972-07-31','YYYY-MM-DD'),'5631 Rice, Houston, TX','F',25000,333445555,5);
+                    INSERT INTO employee VALUES ('Ahmad','V','Jabbar',987987987,TO_DATE('1969-03-29','YYYY-MM-DD'),'980 Dallas, Houston, TX','M',25000,987654321,4);
+                    INSERT INTO employee VALUES ('John','B','Smith',123456789,TO_DATE('1965-01-09','YYYY-MM-DD'),'731 Fondren, Houston, TX','M',30000,333445555,5);
+
+                    INSERT INTO dept_locations VALUES (1,'Houston');
+                    INSERT INTO dept_locations VALUES (4,'Stafford');
+                    INSERT INTO dept_locations VALUES (5,'Bellaire');
+                    INSERT INTO dept_locations VALUES (5,'Sugerland');
+                    INSERT INTO dept_locations VALUES (5,'Houston');
+
+                    INSERT INTO project VALUES ('ProductX',1,'Bellaire',5);
+                    INSERT INTO project VALUES ('ProductY',2,'Sugerland',5);
+                    INSERT INTO project VALUES ('ProductZ',3,'Houston',5);
+                    INSERT INTO project VALUES ('Computerization',10,'Stafford',4);
+                    INSERT INTO project VALUES ('Reorganization',20,'Houston',1);
+                    INSERT INTO project VALUES ('Newbenefits',30,'Stafford',4);
+
+                    INSERT INTO works_on VALUES (123456789,1,32.5);
+                    INSERT INTO works_on VALUES (123456789,2,7.5);
+                    INSERT INTO works_on VALUES (666884444,3,40.0);
+                    INSERT INTO works_on VALUES (453453453,1,20.0);
+                    INSERT INTO works_on VALUES (453453453,2,20.0);
+                    INSERT INTO works_on VALUES (333445555,2,10.0);
+                    INSERT INTO works_on VALUES (333445555,3,10.0);
+                    INSERT INTO works_on VALUES (333445555,10,10.0);
+                    INSERT INTO works_on VALUES (333445555,20,10.0);
+                    INSERT INTO works_on VALUES (999887777,30,30.0);
+                    INSERT INTO works_on VALUES (999887777,10,10.0);
+                    INSERT INTO works_on VALUES (987987987,10,35.0);
+                    INSERT INTO works_on VALUES (987987987,30,5.0);
+                    INSERT INTO works_on VALUES (987654321,30,20.0);
+                    INSERT INTO works_on VALUES (987654321,20,15.0);
+                    INSERT INTO works_on VALUES (888665555,20,NULL);
+
+                    INSERT INTO dependent VALUES (333445555,'Alice','F',TO_DATE('1986-04-05','YYYY-MM-DD'),'DAUGHTER');
+                    INSERT INTO dependent VALUES (333445555,'Theodore','M',TO_DATE('1983-10-25','YYYY-MM-DD'),'SON');
+                    INSERT INTO dependent VALUES (333445555,'Joy','F',TO_DATE('1958-05-03','YYYY-MM-DD'),'SPOUSE');
+                    INSERT INTO dependent VALUES (987654321,'Abner','M',TO_DATE('1942-02-28','YYYY-MM-DD'),'SPOUSE');
+                    INSERT INTO dependent VALUES (123456789,'Michael','M',TO_DATE('1988-01-04','YYYY-MM-DD'),'SON');
+                    INSERT INTO dependent VALUES (123456789,'Alice','F',TO_DATE('1988-12-30','YYYY-MM-DD'),'DAUGHTER');
+                    INSERT INTO dependent VALUES (123456789,'Elizabeth','F',TO_DATE('1967-05-05','YYYY-MM-DD'),'SPOUSE');
+
+                    -- 4. ADD ALL FOREIGN KEYS
+
+                    -- Re-add foreign key constraints at the end
+                    ALTER TABLE employee ADD CONSTRAINT fk_employee_super FOREIGN KEY (superssn) REFERENCES employee(ssn);
+                    ALTER TABLE employee ADD CONSTRAINT fk_employee_dept FOREIGN KEY (dno) REFERENCES department(dnumber);
+                    ALTER TABLE department ADD CONSTRAINT fk_department_mgr FOREIGN KEY (mgrssn) REFERENCES employee(ssn);
+                    ALTER TABLE dept_locations ADD CONSTRAINT fk_deptloc_dept FOREIGN KEY (dnumber) REFERENCES department(dnumber);
+                    ALTER TABLE project ADD CONSTRAINT fk_project_dept FOREIGN KEY (dnum) REFERENCES department(dnumber);
+                    ALTER TABLE works_on ADD CONSTRAINT fk_workson_emp FOREIGN KEY (essn) REFERENCES employee(ssn);
+                    ALTER TABLE works_on ADD CONSTRAINT fk_workson_proj FOREIGN KEY (pno) REFERENCES project(pnumber);
+                    ALTER TABLE dependent ADD CONSTRAINT fk_dependent_emp FOREIGN KEY (essn) REFERENCES employee(ssn);
+                </code>
+            </pre>
+            <p>Adjust the script as needed for your schema.</p>
+        </div>
+        <!-- Slide 4: Running Script in Oracle APEX -->
+        <div class="slide" id="slide-4" style="display:none;">
+            <h2>Running the Script in Oracle APEX</h2>
+            <ol style="font-size:1.1em;">
+                <li>Log in to your Oracle APEX workspace.</li>
+                <li>Go to <b>SQL Workshop</b> &rarr; <b>SQL Scripts</b>.</li>
+                <li>Click <b>Upload</b> to upload your SQL file, or <b>Create</b> to paste your script.</li>
+                <li>Click <b>Run</b> to execute the script and create your tables.</li>
+            </ol>
+            <p>Check for errors and verify your tables in <b>Object Browser</b>.</p>
+        </div>
+        <!-- Slide 5: Question 1 -->
+        <div class="slide" id="slide-5" style="display:none;">
+            <h2>Question 1</h2>
+            <p>Retrieve the names of all employees in department 5 who work more than 10 hours per week on the 'ProductX' project.</p>
+            <button onclick="toggleSolution1()" id="solution1-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution1" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 50%;">
+                        <h3>Solution 1</h3>
+                        <pre>
+                            <code class="language-sql">
+                            SELECT FNAME
+                            FROM EMPLOYEE E, PROJECT P, WORKS_ON W
+                            WHERE E.SSN=W.ESSN
+                            AND P.PNUMBER=W.PNO
+                            AND E.DNO=5
+                            AND P.PNAME='ProductX'
+                            AND W.HOURS > 10;
+                            </code>
+                        </pre>
+                    </div>
+                    <div style="width: 50%;">
+                        <h3>Another Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT FNAME||' '||MINIT||'. '||LNAME "FULL NAME"
+                                FROM EMPLOYEE
+                                WHERE DNO=5 AND SSN IN(
+                                SELECT ESSN
+                                FROM WORKS_ON, PROJECT
+                                WHERE PNAME='PRODUCTX' AND PNO=PNUMBER AND HOURS>10);
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    full name
+                    -------------------------------------------
+                    John B. Smith
+                    Joyce A. English
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 6: Question 2 -->
+        <div class="slide" id="slide-6" style="display:none;">
+            <h2>Question 2</h2>
+            <p>Find the names of all employees who are directly supervised by 'Franklin Wong'.</p>
+            <button onclick="toggleSolution2()" id="solution2-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution2" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 50%;">
+                        <h3>Solution 1</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT FNAME
+                                FROM EMPLOYEE
+                                WHERE SUPERSSN=(SELECT SSN
+                                FROM EMPLOYEE
+                                WHERE FNAME='Franklin'
+                                AND LNAME='Wong');
+                            </code>
+                        </pre>
+                    </div>
+                    <div style="width: 50%;">
+                        <h3>Another Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT FNAME||' '||MINIT||'. '||LNAME "FULL NAME"
+                                FROM EMPLOYEE
+                                WHERE SUPERSSN IN (
+                                SELECT SSN
+                                FROM EMPLOYEE
+                                WHERE FNAME||' '||LNAME='FRANKLIN WONG');
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    JOHN B. SMITH
+                    RAMESH K. NARAYAN
+                    JOYCE A. ENGLISH
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 7: Question 3 -->
+        <div class="slide" id="slide-7" style="display:none;">
+            <h2>Question 3</h2>
+            <p>Retrieve the names of all employees who do not work on any project.</p>
+            <button onclick="toggleSolution3()" id="solution3-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution3" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 50%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT FNAME
+                                FROM EMPLOYEE
+                                WHERE SSN NOT IN(SELECT DISTINCT ESSN
+                                FROM WORKS_ON);
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    No rows
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 8: Question 4 -->
+        <div class="slide" id="slide-8" style="display:none;">
+            <h2>Question 4</h2>
+            <p>Retrieve the names of all departments and the full name of their managers.</p>
+            <button onclick="toggleSolution4()" id="solution4-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution4" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 100%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT DNAME, FNAME||' '||MINIT||'. '||LNAME
+                                FROM EMPLOYEE E, DEPARTMENT D
+                                WHERE E.SSN=D.MGRSSN;
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    Research                 Franklin T. Wong
+                    Headquarters             James E. Borg
+                    Administration           Jennifer S. Wallace
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 9: Question 5 -->
+        <div class="slide" id="slide-9" style="display:none;">
+            <h2>Question 5</h2>
+            <p>For each employee retrieve the full name, department number, department name, supervisor name and birth date ordered from the oldest to the youngest.</p>
+            <button onclick="toggleSolution5()" id="solution5-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution5" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 100%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT E.FNAME||' '||E.MINIT||'. '||E.LNAME "FULL NAME",E.DNO "DEPARTMENT NUMBER",DNAME "DEPARTMENT NAME",S.FNAME SUPERVISOR,E.BDATE "BIRTH DATE"
+                                FROM EMPLOYEE E,DEPARTMENT,EMPLOYEE S
+                                WHERE S.SSN(+)=E.SUPERSSN AND E.DNO=DNUMBER 
+                                ORDER BY E.BDATE
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    FULL NAME         DEPT NU     DEPARTMENT NAME  SUPERVISOR BIRTH DA
+                    =========         =======     ========== ====  ==========  =======
+                    JAMES E. BORG            1    HEADQUARTERS                10/11/37
+                    JENNIFER S. WALLACE      4    ADMINISTRATION    JAMES     20/06/41
+                    FRANKLIN T. WONG         5    RESEARCH          JAMES     08/12/55
+                    RAMESH K. NARAYAN        5    RESEARCH          FRANKLIN  15/09/62
+                    JOHN B. SMITH            5    RESEARCH          FRANKLIN  09/01/65
+                    ALICIA J. ZELAYA         4    ADMINISTRATION    JENNIFER  19/07/68
+                    AHMED V. JABBAR          4    ADMINISTRATION    JENNIFER  29/03/69
+                    JOYCE A. ENGLISH         5    RESEARCH          FRANKLIN  31/07/72
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 10: Question 6 -->
+        <div class="slide" id="slide-10" style="display:none;">
+            <h2>Question 6</h2>
+            <p>Display the full name of the president of the company.</p>
+            <button onclick="toggleSolution6()" id="solution6-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution6" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 100%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT FNAME||' '||MINIT||'. '||LNAME
+                                FROM EMPLOYEE
+                                WHERE SUPERSSN IS NULL;
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    James E. Borg
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 11: Question 7 -->
+        <div class="slide" id="slide-11" style="display:none;">
+            <h2>Question 7</h2>
+            <p>Retrieve employee name, his department name and project department name of employees working in projects not belonging to his department.</p>
+            <button onclick="toggleSolution7()" id="solution7-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution7" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 100%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT E.FNAME, D.DNAME "DEPT. NAME", PD.DNAME "PROJECT DEPT NAME"
+                                FROM EMPLOYEE E, WORKS_ON W, PROJECT P, DEPARTMENT D, DEPARTMENT PD
+                                WHERE E.DNO=D.DNUMBER
+                                AND E.SSN=W.ESSN
+                                AND W.PNO=P.PNUMBER
+                                AND P.DNUM=PD.DNUMBER
+                                AND P.DNUM != E.DNO;
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    Emp                   emp dept                 proj dept
+                    Franklin             Research                 Administration
+                    Franklin             Research                 Headquarters
+                    Jennifer             Administration           Headquarters
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 12: Question 8 -->
+        <div class="slide" id="slide-12" style="display:none;">
+            <h2>Question 8</h2>
+            <p>For each project, list the project name and the total hours per week (by all employees) spent on that project.</p>
+            <button onclick="toggleSolution8()" id="solution8-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution8" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 100%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT PNAME, SUM(HOURS)
+                                FROM PROJECT P, WORKS_ON W
+                                WHERE W.PNO=P.PNUMBER
+                                GROUP BY PNAME;
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    ProductX         52.5
+                    ProductY         17.5
+                    ProductZ         50.0
+                    Computerization  65.0
+                    Reorganization   25.0
+                    Newbenefits      70.0
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 13: Question 9 -->
+        <div class="slide" id="slide-13" style="display:none;">
+            <h2>Question 9</h2>
+            <p>For each department, retrieve the department name and the average salary of all employees working in that department.</p>
+            <button onclick="toggleSolution9()" id="solution9-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution9" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 100%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT DNAME, NVL(AVG(SALARY),0)
+                                FROM EMPLOYEE E, DEPARTMENT D
+                                WHERE E.DNO(+)=D.DNUMBER
+                                GROUP BY DNAME;
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    Research         33250
+                    Administration   31000
+                    Headquarters     55000
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 14: Question 10 -->
+        <div class="slide" id="slide-14" style="display:none;">
+            <h2>Question 10</h2>
+            <p>Retrieve the average salary of all female employees.</p>
+            <button onclick="toggleSolution10()" id="solution10-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution10" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 100%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT AVG(SALARY)
+                                FROM EMPLOYEE
+                                WHERE GENDER='F';
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    30250
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 15: Question 11 -->
+        <div class="slide" id="slide-15" style="display:none;">
+            <h2>Question 11</h2>
+            <p>For each department display department name, maximum employee salary, and name of employee having the maximum salary.</p>
+            <button onclick="toggleSolution11()" id="solution11-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution11" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 100%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT DN "DEPARTMENT NAME", MS "MAXIMUM SALARY", FNAME "EMP NAME"
+                                FROM EMPLOYEE S,(SELECT DNAME DN,DNUMBER DNUM, MAX(SALARY) MS
+                                FROM EMPLOYEE E, DEPARTMENT D
+                                WHERE E.DNO=D.DNUMBER
+                                GROUP BY DNAME, DNUMBER) M
+                                WHERE S.SALARY=M.MS
+                                AND S.DNO=M.DNUM;
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    DEPARTMENT NAME   MAXIMUM SALARY   EMP NAME
+                    Headquarters      55000            James
+                    Research         40000            Franklin
+                    Administration   43000            Jennifer
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 16: Question 12 -->
+        <div class="slide" id="slide-16" style="display:none;">
+            <h2>Question 12</h2>
+            <p>Find the department name and total salaries of the department with maximum total salaries (total salaries: sum of salaries belonging to that department).</p>
+            <button onclick="toggleSolution12()" id="solution12-btn" style="margin-bottom:18px; background:#764ba2; color:#fff;">Show Solution</button>
+            <div id="solution12" style="display:none; width:100%;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="width: 100%;">
+                        <h3>Solution</h3>
+                        <pre>
+                            <code class="language-sql">
+                                SELECT D.DNAME, SUM(E.SALARY)
+                                FROM DEPARTMENT D, EMPLOYEE E
+                                WHERE E.DNO=D.DNUMBER
+                                GROUP BY D.DNAME
+                                HAVING SUM(E.SALARY) = (SELECT MAX(SS)
+                                FROM (SELECT SUM(SALARY) SS
+                                FROM EMPLOYEE
+                                GROUP BY DNO));
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <h3>Result</h3>
+                <pre style="overflow:auto; max-width:100%; background:#f6f8fa; border-radius:6px; padding:12px; font-size:1.08em;">
+                    Research   133000
+                </pre>
+            </div>
+        </div>
+        <!-- Navigation Buttons -->
+        <div class="nav-btns">
+            <button onclick="prevSlide()">Previous</button>
+            <button onclick="nextSlide()">Next</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 16;
+        function showSlide(n) {
+            for (let i = 1; i <= totalSlides; i++) {
+                document.getElementById('slide-' + i).style.display = (i === n) ? 'flex' : 'none';
+            }
+            currentSlide = n;
+        }
+        function nextSlide() {
+            if (currentSlide < totalSlides) showSlide(currentSlide + 1);
+        }
+        function prevSlide() {
+            if (currentSlide > 1) showSlide(currentSlide - 1);
+        }
+        function toggleSolution1() {
+            const sol = document.getElementById('solution1');
+            const btn = document.getElementById('solution1-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution2() {
+            const sol = document.getElementById('solution2');
+            const btn = document.getElementById('solution2-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution3() {
+            const sol = document.getElementById('solution3');
+            const btn = document.getElementById('solution3-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution4() {
+            const sol = document.getElementById('solution4');
+            const btn = document.getElementById('solution4-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution5() {
+            const sol = document.getElementById('solution5');
+            const btn = document.getElementById('solution5-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution6() {
+            const sol = document.getElementById('solution6');
+            const btn = document.getElementById('solution6-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution7() {
+            const sol = document.getElementById('solution7');
+            const btn = document.getElementById('solution7-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution8() {
+            const sol = document.getElementById('solution8');
+            const btn = document.getElementById('solution8-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution9() {
+            const sol = document.getElementById('solution9');
+            const btn = document.getElementById('solution9-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution10() {
+            const sol = document.getElementById('solution10');
+            const btn = document.getElementById('solution10-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution11() {
+            const sol = document.getElementById('solution11');
+            const btn = document.getElementById('solution11-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        function toggleSolution12() {
+            const sol = document.getElementById('solution12');
+            const btn = document.getElementById('solution12-btn');
+            if (sol.style.display === 'none') {
+                sol.style.display = 'block';
+                btn.textContent = 'Hide Solution';
+            } else {
+                sol.style.display = 'none';
+                btn.textContent = 'Show Solution';
+            }
+        }
+        showSlide(1);
+    </script>
+</body>
+</html>
