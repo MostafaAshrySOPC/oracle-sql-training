@@ -28,6 +28,7 @@
 ```
 ├── [oracle_sql_presentation.html](./oracle_sql_presentation.html)       # Enhanced interactive Oracle SQL training slides
 ├── [oracle_apex_presentation.html](./oracle_apex_presentation.html)     # Interactive Oracle APEX training slides (NEW)
+├── [oracle_sql_practical_presentation.html](./oracle_sql_practical_presentation.html) # Hands-on Oracle SQL exercises (NEW)
 ├── README.md                          # Project overview and instructions
 ```
 
@@ -61,11 +62,43 @@
 
 ---
 
+## 🆕 Oracle SQL Practical Presentation
+
+### **What is it?**
+A hands-on, interactive HTML presentation focused on practical Oracle SQL exercises using a company database schema. This complements the main Oracle SQL and APEX presentations by providing step-by-step SQL questions, schema diagrams, and solutions with real query results.
+
+### **Features**
+- Interactive slides for each practical SQL question
+- Show/hide solution and result for each question
+- Schema images and full schema creation script
+- Oracle APEX instructions for running scripts
+- Modern, responsive design with navigation controls
+- Syntax highlighting for SQL code
+
+### **How to Use**
+1. Open `oracle_sql_practical_presentation.html` in your browser (or use GitHub Pages if available)
+2. Navigate using the Previous/Next buttons
+3. Click "Show Solution" on each question to reveal the SQL answer and sample result
+4. Use the schema and script slides for reference
+
+### **Contents**
+- Company schema images (side by side)
+- Full SQL script to create and populate the schema
+- Oracle APEX step-by-step instructions
+- 12+ practical SQL questions, each with:
+  - Problem statement
+  - One or more SQL solutions
+  - Example result set
+  - Interactive show/hide for answers
+
+---
+
 ## ▶️ How to Use
 
 ### **Open Presentations Directly on GitHub**
 - [Oracle SQL Presentation (HTML)](https://mostafaashrysopc.github.io/oracle-sql-training/oracle_sql_presentation.html)
 - [Oracle APEX Presentation (HTML)](https://mostafaashrysopc.github.io/oracle-sql-training/oracle_apex_presentation.html)
+- [Oracle SQL Practical Presentation (HTML)](https://mostafaashrysopc.github.io/oracle-sql-training/oracle_sql_practical_presentation.html)
 
 > **Tip:** For the best experience, use the above GitHub Pages links to open the presentations directly in your browser—no download needed!
 
